@@ -115,7 +115,6 @@ public class Locacao {
 		this.dataDevolvido = dataDevolvido;
 	}
 	
-
 	public List<Exemplar> getExemplares() {
 		return exemplares;
 	}
