@@ -5,15 +5,8 @@ import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "LOCACAO")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Locacao {
 
 	@Id
@@ -49,4 +42,83 @@ public class Locacao {
 	)
 	private List<Exemplar> exemplares = new ArrayList<>();
 	
+	public Locacao() {
+		this.dataLocacao = new Date();
+		this.dataDevolucao = new Date();
+		this.dataDevolvido = null;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Date getDataLocacao() {
+		return dataLocacao;
+	}
+
+	public void setDataLocacao(Date dataLocacao) {
+		this.dataLocacao = dataLocacao;
+	}
+
+	public Date getDataDevolucao() {
+		return dataDevolucao;
+	}
+
+	public void setDataDevolucao(Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
+
+	public Date getDataDevolvido() {
+		return dataDevolvido;
+	}
+
+	public void setDataDevolvido(Date dataDevolvido) {
+		this.dataDevolvido = dataDevolvido;
+	}
+
+	public List<Exemplar> getExemplares() {
+		return exemplares;
+	}
+
+	public void setExemplares(List<Exemplar> exemplares) {
+		this.exemplares = exemplares;
+	}
+	
+
 }

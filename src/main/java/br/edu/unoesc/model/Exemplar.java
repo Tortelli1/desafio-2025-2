@@ -3,15 +3,9 @@ package br.edu.unoesc.model;
 import java.util.Date;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "EXEMPLAR")
-@Getter
-@Setter
-@NoArgsConstructor
 public class Exemplar {
 
 	@Id
@@ -27,5 +21,43 @@ public class Exemplar {
 	@ManyToOne
 	@JoinColumn(name = "FILME_ID", nullable = false)
 	private Filme filme;
+	
+	public Exemplar() {
+		this.dataCadastro = new Date();
+		this.ativo = true;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Date getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Filme getFilme() {
+		return filme;
+	}
+
+	public void setFilme(Filme filme) {
+		this.filme = filme;
+	}
+	
 	
 }

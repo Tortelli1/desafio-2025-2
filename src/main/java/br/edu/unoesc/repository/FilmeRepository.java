@@ -8,4 +8,5 @@ import br.edu.unoesc.model.Filme;
 @Repository
 public interface FilmeRepository extends JpaRepository<Filme, Integer> {
 
+	boolean existsByTitulo(String titulo);
 }
