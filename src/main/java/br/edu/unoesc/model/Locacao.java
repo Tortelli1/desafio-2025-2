@@ -114,6 +114,7 @@ public class Locacao {
 	public void setDataDevolvido(Date dataDevolvido) {
 		this.dataDevolvido = dataDevolvido;
 	}
+	
 
 	public List<Exemplar> getExemplares() {
 		return exemplares;
@@ -122,6 +123,15 @@ public class Locacao {
 	public void setExemplares(List<Exemplar> exemplares) {
 		this.exemplares = exemplares;
 	}
+
+	public String getQrCode() {
+		return qrCode;
+	}
+
+	public void setQrCode(String qrCode) {
+		this.qrCode = qrCode;
+	}
+
 	
 
 }

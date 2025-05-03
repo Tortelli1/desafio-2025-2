@@ -35,7 +35,7 @@ public class LocacaoService {
         }
 
         locacao.setDataLocacao(new Date());
-        locacao.setQrCode(qrCodeService.gerarQrCode(locacao)); // base64 string
+        locacao.setQrCode(qrCodeService.gerarQrCode(locacao));
         locacao.setExemplares(exemplares);
         Locacao salva = locacaoRepository.save(locacao);
 
