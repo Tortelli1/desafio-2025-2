@@ -24,4 +24,8 @@ public class Exemplar {
 	@Column(name = "ATIVO")
 	private Boolean ativo;
 	
+	@ManyToOne
+	@JoinColumn(name = "FILME_ID", nullable = false)
+	private Filme filme;
+	
 }

@@ -1,6 +1,8 @@
 package br.edu.unoesc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,5 +37,8 @@ public class Filme {
 	
 	@Column(name = "LANCAMENTO")
 	private Date lancamento;
+	
+	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
+	private List<Exemplar> exemplares = new ArrayList<>();
 	
 }

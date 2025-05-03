@@ -1,6 +1,8 @@
 package br.edu.unoesc.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -38,5 +40,13 @@ public class Locacao {
 	
 	@Column(name = "DATA_DEVOLVIDO")
 	private Date dataDevolvido;
+	
+	@ManyToMany
+	@JoinTable(
+	    name = "LOCACAO_EXEMPLAR",
+	    joinColumns = @JoinColumn(name = "LOCACAO_ID"),
+	    inverseJoinColumns = @JoinColumn(name = "EXEMPLAR_ID")
+	)
+	private List<Exemplar> exemplares = new ArrayList<>();
 	
 }
