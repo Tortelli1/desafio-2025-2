@@ -34,6 +34,9 @@ public class Locacao {
 	@Column(name = "DATA_DEVOLVIDO")
 	private Date dataDevolvido;
 	
+	@Column(name = "QR_CODE")
+	private String qrCode;
+	
 	@ManyToMany
 	@JoinTable(
 	    name = "LOCACAO_EXEMPLAR",
