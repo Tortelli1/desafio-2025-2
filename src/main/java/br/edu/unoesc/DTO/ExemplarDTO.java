@@ -1,5 +1,8 @@
 package br.edu.unoesc.DTO;
 
-public record ExemplarDTO() {
+import java.util.Date;
+
+public record ExemplarDTO(Integer id, FilmeDTO filme, Date dataCadastro, Boolean ativo) {
+	
 
 }
