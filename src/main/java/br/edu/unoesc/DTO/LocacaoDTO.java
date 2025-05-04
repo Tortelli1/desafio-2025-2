@@ -1,5 +1,5 @@
 package br.edu.unoesc.DTO;
 
-public record FilmeDTO() {
+public record LocacaoDTO() {
 
 }
