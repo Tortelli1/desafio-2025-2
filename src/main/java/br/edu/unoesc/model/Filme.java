@@ -3,6 +3,7 @@ package br.edu.unoesc.model;
 import java.util.Date;
 import java.util.List;
 
+import br.edu.unoesc.DTO.FilmeDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -34,13 +35,14 @@ public class Filme {
 	@OneToMany(mappedBy = "filme")
 	private List<Exemplar> exemplares;
 	
-	public Filme(String titulo, String resumo, String pontuacao, Date lancamento) {
-		this.titulo = titulo;
-		this.resumo = resumo;
-		this.pontuacao = pontuacao;
-		this.lancamento = lancamento;
-		this.ativo = true;
-		this.exemplaresDisponiveis = 0L;
+	public Filme(FilmeDTO filmeDTO) {
+		this.id = filmeDTO.id();
+		this.ativo = filmeDTO.ativo();
+		this.exemplaresDisponiveis = filmeDTO.exemplaresDisponiveis();
+		this.titulo = filmeDTO.titulo();
+		this.resumo = filmeDTO.resumo();
+		this.pontuacao = filmeDTO.pontuacao();
+		this.lancamento = filmeDTO.lancamento();
 	}
 
 	public Filme() {

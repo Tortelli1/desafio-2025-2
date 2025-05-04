@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.edu.unoesc.DTO.LocacaoDTO;
 import jakarta.persistence.*;
 @Entity
 @Table(name = "LOCACAO")
@@ -45,18 +46,17 @@ public class Locacao {
 	)
 	private List<Exemplar> exemplares;
 	
-	public Locacao(String nome, String cpf, String email, String telefone, Date dataLocacao, Date dataDevolucao,
-			Date dataDevolvido, String qrCode) {
-		this.nome = nome;
-		this.cpf = cpf;
-		this.email = email;
-		this.telefone = telefone;
-		this.dataLocacao = dataLocacao;
-		this.dataDevolucao = dataDevolucao;
-		this.dataDevolvido = dataDevolvido;
-		this.qrCode = qrCode;
+	public Locacao(LocacaoDTO locacaoDTO) {
+		this.nome = locacaoDTO.nome();
+		this.cpf = locacaoDTO.cpf();
+		this.email = locacaoDTO.email();
+		this.telefone = locacaoDTO.telefone();
+		this.dataLocacao = locacaoDTO.dataLocacao();
+		this.dataDevolucao = locacaoDTO.dataDevolucao();
+		this.dataDevolvido = locacaoDTO.dataDevolvido();
 		this.exemplares = new ArrayList<>();
 	}
+	
 	
 	public Locacao() {
 		

@@ -1,8 +1,8 @@
 package br.edu.unoesc.model;
 
 import java.util.Date;
-import java.util.List;
 
+import br.edu.unoesc.DTO.ExemplarDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,12 +21,14 @@ public class Exemplar {
 	
 	@ManyToOne
 	@JoinColumn(name = "FILME_ID", nullable = false)
-	private List<Filme> filme;
+	private Filme filme;
 	
-	public Exemplar(Date dataCadastro, Boolean ativo, List<Filme> filme) {
-		this.dataCadastro = dataCadastro;
-		this.ativo = ativo;
-		this.filme = filme;
+	public Exemplar(ExemplarDTO exemplarDTO) {
+		this.id = exemplarDTO.id();
+		this.dataCadastro = exemplarDTO.dataCadastro();
+		this.ativo = exemplarDTO.ativo();
+		this.filme = new Filme(exemplarDTO.filme());
+
 	}
 	
 	public Exemplar() {
@@ -57,11 +59,11 @@ public class Exemplar {
 		this.ativo = ativo;
 	}
 
-	public List<Filme> getFilme() {
+	public Filme getFilme() {
 		return filme;
 	}
 
-	public void setFilme(List<Filme> filme) {
+	public void setFilme(Filme filme) {
 		this.filme = filme;
 	}
 
