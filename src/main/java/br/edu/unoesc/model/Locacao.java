@@ -43,12 +43,23 @@ public class Locacao {
 	    joinColumns = @JoinColumn(name = "LOCACAO_ID"),
 	    inverseJoinColumns = @JoinColumn(name = "EXEMPLAR_ID")
 	)
-	private List<Exemplar> exemplares = new ArrayList<>();
+	private List<Exemplar> exemplares;
+	
+	public Locacao(String nome, String cpf, String email, String telefone, Date dataLocacao, Date dataDevolucao,
+			Date dataDevolvido, String qrCode) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.telefone = telefone;
+		this.dataLocacao = dataLocacao;
+		this.dataDevolucao = dataDevolucao;
+		this.dataDevolvido = dataDevolvido;
+		this.qrCode = qrCode;
+		this.exemplares = new ArrayList<>();
+	}
 	
 	public Locacao() {
-		this.dataLocacao = new Date();
-		this.dataDevolucao = new Date();
-		this.dataDevolvido = null;
+		
 	}
 
 	public Integer getId() {

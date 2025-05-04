@@ -2,6 +2,7 @@ package br.edu.unoesc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ public class ExemplarController {
 	private ExemplarService exemplarService;
 	
    @GetMapping("/cadastro")
-    public String exibirFormulario(Module model) {
+    public String exibirFormulario(Model model) {
         model.addAttribute("filmes", filmeService.listarFilmesAtivos());
         model.addAttribute("exemplarRequestDTO", new ExemplarRequestDTO());
         return "exemplar/cadastro";

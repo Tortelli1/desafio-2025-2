@@ -1,6 +1,7 @@
 package br.edu.unoesc.model;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 
@@ -20,11 +21,16 @@ public class Exemplar {
 	
 	@ManyToOne
 	@JoinColumn(name = "FILME_ID", nullable = false)
-	private Filme filme;
+	private List<Filme> filme;
+	
+	public Exemplar(Date dataCadastro, Boolean ativo, List<Filme> filme) {
+		this.dataCadastro = dataCadastro;
+		this.ativo = ativo;
+		this.filme = filme;
+	}
 	
 	public Exemplar() {
-		this.dataCadastro = new Date();
-		this.ativo = true;
+		
 	}
 
 	public Integer getId() {
@@ -51,13 +57,14 @@ public class Exemplar {
 		this.ativo = ativo;
 	}
 
-	public Filme getFilme() {
+	public List<Filme> getFilme() {
 		return filme;
 	}
 
-	public void setFilme(Filme filme) {
+	public void setFilme(List<Filme> filme) {
 		this.filme = filme;
 	}
+
 	
 	
 }

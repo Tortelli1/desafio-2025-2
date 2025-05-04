@@ -1,17 +1,12 @@
 package br.edu.unoesc.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "FILME")
-@NoArgsConstructor
-@AllArgsConstructor
 public class Filme {
 
 	@Id
@@ -36,8 +31,8 @@ public class Filme {
 	@Column(name = "LANCAMENTO")
 	private Date lancamento;
 	
-	@OneToMany(mappedBy = "filme", cascade = CascadeType.ALL)
-	private List<Exemplar> exemplares = new ArrayList<>();
+	@OneToMany(mappedBy = "filme")
+	private List<Exemplar> exemplares;
 	
 	public Filme(String titulo, String resumo, String pontuacao, Date lancamento) {
 		this.titulo = titulo;
@@ -48,6 +43,10 @@ public class Filme {
 		this.exemplaresDisponiveis = 0L;
 	}
 
+	public Filme() {
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}
