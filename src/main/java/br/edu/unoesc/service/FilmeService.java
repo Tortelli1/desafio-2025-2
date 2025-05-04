@@ -18,7 +18,7 @@ public class FilmeService {
 		return filmeRepository.findAll();
 	}
 	
-    public Filme adicionarFilmeAutomatico(Filme filme) {
+    public Filme adicionarFilme(Filme filme) {
     	if (filmeRepository.existsByTitulo(filme.getTitulo())) {
             throw new RuntimeException("Filme já cadastrado.");
         }
