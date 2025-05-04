@@ -1,5 +1,7 @@
 package br.edu.unoesc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ public class FilmeService {
 	@Autowired
     private FilmeRepository filmeRepository;
 
+	public List<Filme> listarTodos(){
+		return filmeRepository.findAll();
+	}
+	
     public Filme adicionarFilmeAutomatico(Filme filme) {
     	if (filmeRepository.existsByTitulo(filme.getTitulo())) {
             throw new RuntimeException("Filme já cadastrado.");
