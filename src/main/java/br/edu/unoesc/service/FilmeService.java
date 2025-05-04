@@ -14,6 +14,10 @@ public class FilmeService {
 	@Autowired
     private FilmeRepository filmeRepository;
 
+	public List<Filme> listarFilmesAtivos() {
+		return filmeRepository.findByAtivoTrue();
+	}
+	
 	public List<Filme> listarTodos(){
 		return filmeRepository.findAll();
 	}
