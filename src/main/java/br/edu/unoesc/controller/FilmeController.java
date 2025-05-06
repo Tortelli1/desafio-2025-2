@@ -2,6 +2,7 @@ package br.edu.unoesc.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,10 +30,10 @@ public class FilmeController {
 	@Autowired
 	private TmdbService tmdbService;
 	
-	@GetMapping("/listar")
+	@GetMapping("/consultar")
 	public String listarFilmes(FilmeDTO filmeDTO, Model model) {
 		model.addAttribute("filmeDTO", filmeService.listarFilmesAtivos());
-		return "filmes/listar";
+		return "paginas/consulta/consultarFilme";
 		
 	}
 	
@@ -47,24 +48,42 @@ public class FilmeController {
 		try {
 			filmeService.adicionarFilme(new Filme(filmeDTO));
 			attr.addFlashAttribute("success", "Filme cadastrado com sucesso!");
-			return "redirect:/filmes/listar";
+			return "redirect:/filmes/consultar";
 		} catch (Exception e) {
 			attr.addFlashAttribute("error", "Erro ao cadastrar filme!");
 			return "redirect:/filmes/cadastrar";
 		}
 	}
 	
+	
+	@PostMapping("/editar")
+	public String editarFilme(FilmeDTO filmeDTO, RedirectAttributes attr) {
+	    try {
+	        filmeService.atualizarFilme(filmeDTO);
+	        attr.addFlashAttribute("success", "Filme atualizado com sucesso!");
+	        return "redirect:/filmes/consultar";
+	    } catch (Exception e) {
+	        attr.addFlashAttribute("error", "Erro ao atualizar filme!");
+	        return "redirect:/filmes/editar/" + filmeDTO.id();
+	    }
+	}
+	
 	@GetMapping("/editar/{id}")
 	public String editarFilme(@PathVariable Integer id, Model model) {
-		Filme filme = filmeService.buscarPorId(id);
-		model.addAttribute("filme", filme);
-		return "paginas/editar/editarFilme";
+	    Filme filme = filmeService.buscarPorId(id);
+	    model.addAttribute("filmeDTO", FilmeDTO.fromEntity(filme));
+	    return "paginas/cadastro/cadastrarFilme";
 	}
 	
 	@DeleteMapping("/deletar/{id}")
-	public String deletarFilme(@PathVariable Integer id) {
-		filmeService.deletarFilme(id);
-		return "redirect:/filmes/listar";
+	public ResponseEntity<String> deletarFilme(@PathVariable Integer id) {
+	    try {
+	        filmeService.deletarFilme(id);
+	        return ResponseEntity.ok("Filme excluído com sucesso");
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o filme");
+	    }
 	}
 
 	@GetMapping("/buscar-filmes")
