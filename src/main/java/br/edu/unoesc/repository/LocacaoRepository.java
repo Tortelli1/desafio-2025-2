@@ -21,5 +21,4 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Integer> {
     @Query("SELECT l FROM Locacao l WHERE l.dataDevolvido IS NOT NULL")
     List<Locacao> findLocacoesDevolvidas();
 
-    List<Locacao> findByEmailContainingIgnoreCaseOrNomeContainingIgnoreCaseOrCpfContaining(String email, String nome, String cpf);	
 }

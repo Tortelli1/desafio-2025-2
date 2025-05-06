@@ -1,6 +1,7 @@
 package br.edu.unoesc.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,32 +23,35 @@ public class ExemplarService {
 	@Autowired
 	private LocacaoRepository locacaoRepository;
 
-	public Exemplar salvar(Exemplar exemplar, Filme filme) {
-		if (!Boolean.TRUE.equals(filme.getAtivo())) {
-			throw new RuntimeException("Filme inativo.");
-		}
-		exemplar.setDataCadastro(new Date());
-		exemplar.setAtivo(true);
-		exemplar.setFilme(filme);
+	 public Exemplar adicionarExemplar(Exemplar exemplar, Filme filme) {
+	        if (!Boolean.TRUE.equals(filme.getAtivo())) {
+	            throw new RuntimeException("Filme inativo.");
+	        }
+	        exemplar.setDataCadastro(new Date());
+	        exemplar.setAtivo(true);
+	        exemplar.setFilme(filme);
 
-		Exemplar salvo = exemplarRepository.save(exemplar);
-		filmeService.atualizarExemplares(filme, 1);
-		return salvo;
-	}
+	        Exemplar salvo = exemplarRepository.save(exemplar);
+	        filmeService.atualizarExemplares(filme, 1);
+	        return salvo;
+	    }
 
-	public void inativar(Integer id) {
-		Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();
-		if (!exemplar.getAtivo())
-			return;
+	    public void deletarExemplar(Integer id) {
+	        Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();
+	        if (!exemplar.getAtivo()) return;
 
-		boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
-		if (estaAlugado) {
-			throw new RuntimeException("Exemplar está alugado.");
-		}
+	        boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
+	        if (estaAlugado) {
+	            throw new RuntimeException("Exemplar está alugado.");
+	        }
 
-		exemplar.setAtivo(false);
-		exemplarRepository.save(exemplar);
-		filmeService.atualizarExemplares(exemplar.getFilme(), -1);
-	}
+	        exemplar.setAtivo(false);
+	        exemplarRepository.save(exemplar);
+	        filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+	    }
+
+	    public List<Exemplar> listarTodos() {
+	        return exemplarRepository.findAll();
+	    }
 	
 }

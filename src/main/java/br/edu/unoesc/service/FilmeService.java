@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.unoesc.DTO.FilmeDTO;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.repository.FilmeRepository;
 
@@ -27,9 +28,18 @@ public class FilmeService {
             throw new RuntimeException("Filme já cadastrado.");
         }
 
+    	filme.setExemplaresDisponiveis(0L);
         return filmeRepository.save(filme);
     }
 
+    
+    public void atualizarFilme(FilmeDTO dto) {
+        Filme existente = buscarPorId(dto.id());
+        existente.setResumo(dto.resumo());
+        existente.setAtivo(dto.ativo());
+        filmeRepository.save(existente);
+    }
+    
     public void atualizarExemplares(Filme filme, int quantidade) {
         filme.setExemplaresDisponiveis(filme.getExemplaresDisponiveis() + quantidade);
         filmeRepository.save(filme);
@@ -37,14 +47,12 @@ public class FilmeService {
 
     
     public void deletarFilme(Integer id) {
-		try {
-			Filme filme = filmeRepository.findById(id).orElseThrow();
-			filmeRepository.delete(filme);
-		} catch (Exception e) {
-			throw new RuntimeException("Erro ao deletar filme!");
-		}
-		
-	}
+        if (filmeRepository.existsById(id)) {
+            filmeRepository.deleteById(id); 
+        } else {
+            throw new RuntimeException("Filme não encontrado!");
+        }
+    }
     
     
     public Filme buscarPorId(Integer id) {

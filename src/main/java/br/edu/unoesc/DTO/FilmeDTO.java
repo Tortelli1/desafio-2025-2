@@ -30,4 +30,18 @@ public record FilmeDTO(
 	    filme.setLancamento(this.lancamento);
 	    return filme;
 	}
+	
+	public static FilmeDTO fromEntity(Filme filme) {
+	    return new FilmeDTO(
+	        filme.getId(),
+	        filme.getAtivo(),
+	        filme.getExemplaresDisponiveis(),
+	        filme.getTitulo(),
+	        filme.getResumo(),
+	        filme.getPontuacao(),
+	        filme.getLancamento(),
+	        null
+	    );
+	}
+	
 }
