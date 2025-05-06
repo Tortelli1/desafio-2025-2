@@ -23,7 +23,7 @@ public class Filme {
 	@Column(name = "TITULO")
 	private String titulo;
 	
-	@Column(name = "RESUMO")
+	@Column(name = "RESUMO", columnDefinition = "TEXT")
 	private String resumo;
 	
 	@Column(name = "PONTUACAO")
