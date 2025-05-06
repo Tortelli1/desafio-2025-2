@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head><meta charset="UTF-8"/></head>
+<body>
+    <section class="layout-content" layout:fragment="corpo">
+        <form th:action="@{/exemplar/salvar}" th:object="${exemplar}" method="POST">
+
+            <!-- Campo para Seleção de Filme -->
+            <div class="form-group col-md-6">
+                <label for="filme">Filme</label>
+                <select class="form-control" id="filme" th:field="*{filme.id}">
+                    <option th:each="filme : ${filmes}" th:value="${filme.id}" th:text="${filme.titulo}"></option>
+                </select>
+            </div>
+
+            <!-- Campo para Ativo -->
+            <div class="form-group col-md-6">
+                <label for="ativo">Ativo</label>
+                <select class="form-control" id="ativo" th:field="*{ativo}">
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </section>
+</body>
+</html>
