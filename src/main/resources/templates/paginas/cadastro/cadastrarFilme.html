@@ -7,8 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+	<header th:insert="~{/paginas/header :: header}"></header>
     <div class="container mt-5">
         <h2>Cadastrar Filme</h2>
+		
+		<div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+		<div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+		
         <div class="form-group col-md-6">
             <label for="buscaTitulo">Buscar Filme</label>
             <input type="text" class="form-control" id="buscaTitulo" placeholder="Digite o título do filme..." />
@@ -41,7 +46,7 @@
 
             <div class="form-group col-md-6">
                 <label for="exemplaresDisponiveis">Número de Exemplares</label>
-                <input type="number" class="form-control" id="exemplaresDisponiveis" th:field="*{exemplaresDisponiveis}" min="0" />
+                <input type="number" class="form-control" id="exemplaresDisponiveis" th:field="*{exemplaresDisponiveis}" readonly/>
             </div>
 
             <div class="form-group col-md-6">
@@ -58,6 +63,6 @@
         </form>
     </div>
 
-    <script src="/js/tmdb.js"></script>
+    <script src="/js/cadastrarFilme.js"></script>
 </body>
 </html>
