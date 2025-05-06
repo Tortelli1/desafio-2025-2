@@ -27,8 +27,6 @@ public class FilmeService {
             throw new RuntimeException("Filme já cadastrado.");
         }
 
-        filme.setAtivo(true);
-        filme.setExemplaresDisponiveis(0L);
         return filmeRepository.save(filme);
     }
 
@@ -37,6 +35,18 @@ public class FilmeService {
         filmeRepository.save(filme);
     }
 
+    
+    public void deletarFilme(Integer id) {
+		try {
+			Filme filme = filmeRepository.findById(id).orElseThrow();
+			filmeRepository.delete(filme);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao deletar filme!");
+		}
+		
+	}
+    
+    
     public Filme buscarPorId(Integer id) {
         return filmeRepository.findById(id).orElseThrow();
     }
