@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const buscaTituloInput = document.getElementById('buscaTitulo');
     const sugestoesDiv = document.getElementById('sugestoes');
-    const filmeForm = document.getElementById('filmeForm');
 
-    // Busca sugestões de filmes
     buscaTituloInput.addEventListener('input', function () {
         const query = buscaTituloInput.value.trim();
 
@@ -26,8 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Exibe sugestões clicáveis
-    function mostrarSugestoes(filmes) {
+	function mostrarSugestoes(filmes) {
         sugestoesDiv.innerHTML = '';
         filmes.forEach(filme => {
             const sugestaoItem = document.createElement('a');
@@ -41,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Preenche os campos do formulário com os dados do filme
     function preencherFormulario(filme) {
         document.getElementById('titulo').value = filme.titulo || '';
         document.getElementById('resumo').value = filme.resumo || '';
