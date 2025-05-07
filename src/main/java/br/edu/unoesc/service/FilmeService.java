@@ -23,9 +23,12 @@ public class FilmeService {
 				.collect(Collectors.toList());
 	}
 	
-	public List<Filme> listarTodos(){
-		return filmeRepository.findAll();
-	}
+    public List<FilmeDTO> listarTodos() {
+        List<Filme> filmes = filmeRepository.findAll();
+        return filmes.stream()
+                     .map(filme -> FilmeDTO.configuraFilme(filme))
+                     .collect(Collectors.toList());
+    }
 	
     public Filme adicionarFilme(Filme filme) {
     	if (filmeRepository.existsByTitulo(filme.getTitulo())) {
@@ -59,13 +62,16 @@ public class FilmeService {
     }
     
 
+    public FilmeDTO buscarDtoPorId(Integer id) {
+        Filme filme = filmeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+
+        return FilmeDTO.configuraFilme(filme);
+    }
+    
     public Filme buscarPorId(Integer id) {
         return filmeRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
     }
-    
-//    public FilmeDTO buscarPorId(Integer id) {
-//        return FilmeDTO.configuraFilme(filmeRepository.findById(id).orElseThrow());
-//    }
 	
 }

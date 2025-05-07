@@ -1,6 +1,7 @@
 package br.edu.unoesc.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,13 @@ public class ExemplarService {
 	@Autowired
 	private LocacaoRepository locacaoRepository;	
 	
+    public List<ExemplarDTO> listarTodos() {
+        List<Exemplar> exemplares = exemplarRepository.findAll();
+        return exemplares.stream()
+                         .map(exemplar -> new ExemplarDTO(exemplar))
+                         .collect(Collectors.toList());
+    }
+	
 	public ExemplarDTO adicionarExemplar(ExemplarDTO exemplarDTO) {
 		Filme filme = filmeService.buscarPorId(exemplarDTO.filmeId());
 
@@ -39,24 +47,50 @@ public class ExemplarService {
 		return new ExemplarDTO(salvo);
 	}
 	
+    public void atualizarExemplar(Integer id, boolean ativo) {
+        Exemplar exemplar = exemplarRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
-	public void deletarExemplar(Integer id) {
-		Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();
-		if (!exemplar.getAtivo())
-			return;
+        if (exemplar.getAtivo() && !ativo) {
+            exemplar.setAtivo(false);
+            exemplarRepository.save(exemplar);
 
-		boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
-		if (estaAlugado) {
-			throw new RuntimeException("Exemplar está alugado.");
-		}
+            filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+        }
+    }
+	
+    public void deletarExemplar(Integer id) {
+        Exemplar exemplar = exemplarRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
-		exemplar.setAtivo(false);
-		exemplarRepository.save(exemplar);
-		filmeService.atualizarExemplares(exemplar.getFilme(), -1);
-	}
+        if (!exemplar.getAtivo()) {
+            throw new RuntimeException("Exemplar inativo não pode ser excluído.");
+        }
 
-	public List<Exemplar> listarTodos() {
-		return exemplarRepository.findAll();
-	}
+        boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
+        if (estaAlugado) {
+            throw new RuntimeException("Exemplar está atualmente alugado e não pode ser excluído.");
+        }
+
+        exemplarRepository.deleteById(id);
+        filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+    }
+
+
+    public Exemplar buscarPorId(Integer id) {
+        return exemplarRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
+    }
+    
+    public List<ExemplarDTO> listarExemplaresPorFilme(Integer filmeId) {
+        Filme filme = filmeService.buscarPorId(filmeId);
+        List<Exemplar> exemplaresAtivos = exemplarRepository.findByFilmeIdAndAtivoTrue(filmeId);
+        
+        return exemplaresAtivos.stream()
+                               .map(exemplar -> new ExemplarDTO(exemplar))
+                               .collect(Collectors.toList());
+    }
+
+
 
 }

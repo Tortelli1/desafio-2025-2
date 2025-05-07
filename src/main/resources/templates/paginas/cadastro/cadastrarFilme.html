@@ -20,9 +20,7 @@
             <div id="sugestoes" class="list-group mt-1"></div>
         </div>
 
-        <form id="filmeForm"
-              th:action="@{${filmeDTO.id == null} ? '/filmes/salvar' : '/filmes/editar'}"
-              th:object="${filmeDTO}" method="POST">
+        <form id="filmeForm" th:action="@{${filmeDTO.id == null} ? '/filmes/salvar' : '/filmes/editar'}" th:object="${filmeDTO}" method="POST">
               
             <div class="form-group col-md-6">
                 <label for="titulo">Título</label>

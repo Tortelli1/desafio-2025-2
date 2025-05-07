@@ -69,7 +69,7 @@ public class FilmeController {
 	
 	@GetMapping("/editar/{id}")
 	public String editarFilme(@PathVariable Integer id, Model model) {
-	    FilmeDTO filme = filmeService.buscarPorId(id);
+	    FilmeDTO filme = filmeService.buscarDtoPorId(id);
 	    model.addAttribute("filmeDTO", filme);
 	    return "paginas/cadastro/cadastrarFilme";
 	}
