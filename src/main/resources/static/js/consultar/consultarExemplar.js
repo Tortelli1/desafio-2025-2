@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     botoesExcluir.forEach(botao => {
         botao.addEventListener('click', () => {
-            const exemplarId = botao.getAttribute('data-id'); // Obtém o ID do exemplar
+            const exemplarId = botao.getAttribute('data-id');
 
             if (confirm('Tem certeza que deseja excluir este exemplar?')) {
                 fetch(`/exemplar/deletar/${exemplarId}`, {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     if (response.ok) {
                         alert('Exemplar excluído com sucesso!');
-                        location.reload();  // Recarrega a página após a exclusão
+                        location.reload();
                     } else {
                         alert('Erro ao excluir o exemplar.');
                     }

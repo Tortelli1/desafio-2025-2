@@ -77,26 +77,26 @@ public class ExemplarController {
 
         return "redirect:/exemplar/consultar";
     }
-
+    
     @PostMapping("/editar")
     public String salvarEdicaoExemplar(@ModelAttribute ExemplarDTO exemplarDTO, RedirectAttributes attr) {
         try {
-            exemplarService.atualizarExemplar(exemplarDTO.id(), false);
+            exemplarService.inativarExemplar(exemplarDTO);
             attr.addFlashAttribute("success", "Exemplar inativado com sucesso!");
             return "redirect:/exemplar/consultar";
         } catch (Exception e) {
-            attr.addFlashAttribute("error", "Erro ao atualizar exemplar.");
+            attr.addFlashAttribute("error", "Erro ao inativar exemplar: " + e.getMessage());
             return "redirect:/exemplar/editar/" + exemplarDTO.id();
         }
     }
-
+    
     @GetMapping("/editar/{id}")
     public String editarExemplar(@PathVariable Integer id, Model model) {
         Exemplar exemplar = exemplarService.buscarPorId(id);
 
         if (exemplar != null) {
             ExemplarDTO exemplarDTO = new ExemplarDTO(exemplar);
-            model.addAttribute("exemplar", exemplarDTO);
+            model.addAttribute("exemplar", exemplarDTO);  
         }
 
         List<FilmeDTO> filmes = filmeService.listarFilmesAtivos();
@@ -110,5 +110,4 @@ public class ExemplarController {
         exemplarService.deletarExemplar(id);
         return ResponseEntity.noContent().build();
     }
-    
 }

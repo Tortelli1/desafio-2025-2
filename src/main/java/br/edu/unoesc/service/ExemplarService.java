@@ -46,18 +46,22 @@ public class ExemplarService {
 		
 		return new ExemplarDTO(salvo);
 	}
-	
-    public void atualizarExemplar(Integer id, boolean ativo) {
-        Exemplar exemplar = exemplarRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
-        if (exemplar.getAtivo() && !ativo) {
-            exemplar.setAtivo(false);
-            exemplarRepository.save(exemplar);
+	public ExemplarDTO inativarExemplar(ExemplarDTO exemplarDTO) {
+	    Exemplar exemplar = exemplarRepository.findById(exemplarDTO.id())
+	            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
-            filmeService.atualizarExemplares(exemplar.getFilme(), -1);
-        }
-    }
+	    if (exemplar.getAtivo()) {
+	        Filme filme = exemplar.getFilme();
+	        
+	        filmeService.atualizarExemplares(filme, -1);
+
+	        exemplar.setAtivo(false);
+	        exemplarRepository.save(exemplar);
+	    }
+
+	    return new ExemplarDTO(exemplar);
+	}
 	
     public void deletarExemplar(Integer id) {
         Exemplar exemplar = exemplarRepository.findById(id)
@@ -90,7 +94,4 @@ public class ExemplarService {
                                .map(exemplar -> new ExemplarDTO(exemplar))
                                .collect(Collectors.toList());
     }
-
-
-
 }
