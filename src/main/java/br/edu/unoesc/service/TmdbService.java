@@ -54,8 +54,7 @@ public class TmdbService {
                         (String) filmeData.get("title"),
                         (String) filmeData.get("overview"),
                         String.valueOf(filmeData.get("vote_average")),
-                        parseDate((String) filmeData.get("release_date")),
-                        new ArrayList<>()
+                        parseDate((String) filmeData.get("release_date"))
                 );
                 filmes.add(filmeDTO);
             }
@@ -89,8 +88,7 @@ public class TmdbService {
                     (String) dados.get("title"),
                     (String) dados.get("overview"),
                     String.valueOf(dados.get("vote_average")),
-                    parseDate((String) dados.get("release_date")),
-                    new ArrayList<>()
+                    parseDate((String) dados.get("release_date"))
             );
         }
     }

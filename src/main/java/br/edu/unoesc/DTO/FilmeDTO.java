@@ -1,8 +1,6 @@
 package br.edu.unoesc.DTO;
 
 import java.util.Date;
-import java.util.List;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import br.edu.unoesc.model.Filme;
@@ -15,8 +13,7 @@ public record FilmeDTO(
 		String resumo, 
 		String pontuacao,
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
-		Date lancamento, 
-		List<ExemplarDTO> exemplares
+		Date lancamento
 		) {
 	
 	public Filme constroiFilme() {
@@ -39,8 +36,7 @@ public record FilmeDTO(
 	        filme.getTitulo(),
 	        filme.getResumo(),
 	        filme.getPontuacao(),
-	        filme.getLancamento(),
-	        null
+	        filme.getLancamento()
 	    );
 	}
 	
