@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.unoesc.DTO.ExemplarDTO;
+import br.edu.unoesc.DTO.FilmeDTO;
 import br.edu.unoesc.model.Exemplar;
-import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.service.ExemplarService;
 import br.edu.unoesc.service.FilmeService;
 
@@ -28,17 +28,15 @@ public class ExemplarController {
 	
     @GetMapping("/cadastrar")
     public String cadastrarExemplar(Model model) {
-        model.addAttribute("filmes", filmeService.listarFilmesAtivos());
-        model.addAttribute("exemplar", new ExemplarDTO(null, null, null, true)); 
+        model.addAttribute("filmes", filmeService.listarFilmesAtivos()); 
+        model.addAttribute("exemplar", ExemplarDTO.configuraExemplar(new Exemplar())); 
         return "paginas/cadastro/cadastrarExemplar";
     }
     
     @PostMapping("/salvar")
-    public String salvarExemplar(@ModelAttribute ExemplarDTO exemplarDTO, Model model) {
+    public String salvarExemplar(@ModelAttribute ExemplarDTO exemplarDTO, @ModelAttribute FilmeDTO filmeDTO,Model model) {
         try {
-            Filme filme = filmeService.buscarPorId(exemplarDTO.filme().id());
-            Exemplar exemplar = new Exemplar(exemplarDTO);
-            exemplarService.adicionarExemplar(exemplar, filme);
+            exemplarService.adicionarExemplar(exemplarDTO, filmeDTO);
             model.addAttribute("success", "Exemplar cadastrado com sucesso!");
             return "redirect:/exemplar/listarExemplar";
         } catch (Exception e) {

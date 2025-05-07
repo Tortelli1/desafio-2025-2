@@ -17,5 +17,16 @@ public record ExemplarDTO(
         return exemplar;
 	}
 	
+	public ExemplarDTO(Exemplar exemplar) {
+		this(exemplar.getId(), exemplar.getDataCadastro(), exemplar.getAtivo());
+	}
+	
+	public static ExemplarDTO configuraExemplar(Exemplar exemplar) {
+		return new ExemplarDTO(
+				exemplar.getId(),
+				exemplar.getDataCadastro(),
+				exemplar.getAtivo()
+		);
+	}
 	
 }

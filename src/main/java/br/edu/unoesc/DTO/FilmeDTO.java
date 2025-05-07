@@ -28,7 +28,7 @@ public record FilmeDTO(
 	    return filme;
 	}
 	
-	public static FilmeDTO fromEntity(Filme filme) {
+	public static FilmeDTO configuraFilme(Filme filme) {
 	    return new FilmeDTO(
 	        filme.getId(),
 	        filme.getAtivo(),

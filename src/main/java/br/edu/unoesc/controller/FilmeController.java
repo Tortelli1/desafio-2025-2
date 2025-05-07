@@ -55,7 +55,6 @@ public class FilmeController {
 		}
 	}
 	
-	
 	@PostMapping("/editar")
 	public String editarFilme(FilmeDTO filmeDTO, RedirectAttributes attr) {
 	    try {
@@ -70,8 +69,8 @@ public class FilmeController {
 	
 	@GetMapping("/editar/{id}")
 	public String editarFilme(@PathVariable Integer id, Model model) {
-	    Filme filme = filmeService.buscarPorId(id);
-	    model.addAttribute("filmeDTO", FilmeDTO.fromEntity(filme));
+	    FilmeDTO filme = filmeService.buscarPorId(id);
+	    model.addAttribute("filmeDTO", filme);
 	    return "paginas/cadastro/cadastrarFilme";
 	}
 	

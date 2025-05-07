@@ -27,8 +27,6 @@ public class Exemplar {
 		this.id = exemplarDTO.id();
 		this.dataCadastro = exemplarDTO.dataCadastro();
 		this.ativo = exemplarDTO.ativo();
-		this.filme = new Filme(exemplarDTO.filme());
-
 	}
 	
 	public Exemplar() {

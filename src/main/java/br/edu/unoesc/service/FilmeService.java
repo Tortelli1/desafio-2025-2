@@ -1,6 +1,7 @@
 package br.edu.unoesc.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,11 @@ public class FilmeService {
 	@Autowired
     private FilmeRepository filmeRepository;
 
-	public List<Filme> listarFilmesAtivos() {
-		return filmeRepository.findByAtivoTrue();
+	public List<FilmeDTO> listarFilmesAtivos() {
+		return filmeRepository.findByAtivoTrue()
+				.stream()
+				.map(filme -> FilmeDTO.configuraFilme(filme))
+				.collect(Collectors.toList());
 	}
 	
 	public List<Filme> listarTodos(){
@@ -34,7 +38,7 @@ public class FilmeService {
 
     
     public void atualizarFilme(FilmeDTO dto) {
-        Filme existente = buscarPorId(dto.id());
+        Filme existente = filmeRepository.findById(dto.id()).orElseThrow();
         existente.setResumo(dto.resumo());
         existente.setAtivo(dto.ativo());
         filmeRepository.save(existente);
@@ -55,8 +59,8 @@ public class FilmeService {
     }
     
     
-    public Filme buscarPorId(Integer id) {
-        return filmeRepository.findById(id).orElseThrow();
+    public FilmeDTO buscarPorId(Integer id) {
+        return FilmeDTO.configuraFilme(filmeRepository.findById(id).orElseThrow());
     }
 	
 }

@@ -1,11 +1,12 @@
 package br.edu.unoesc.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.unoesc.DTO.ExemplarDTO;
+import br.edu.unoesc.DTO.FilmeDTO;
 import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.repository.ExemplarRepository;
@@ -13,7 +14,7 @@ import br.edu.unoesc.repository.LocacaoRepository;
 
 @Service
 public class ExemplarService {
-	
+
 	@Autowired
 	private ExemplarRepository exemplarRepository;
 
@@ -23,35 +24,36 @@ public class ExemplarService {
 	@Autowired
 	private LocacaoRepository locacaoRepository;
 
-	 public Exemplar adicionarExemplar(Exemplar exemplar, Filme filme) {
+	public ExemplarDTO adicionarExemplar(ExemplarDTO exemplarDTO, FilmeDTO filmeDTO) {
+		 Filme filme = filmeDTO.constroiFilme();
 	        if (!Boolean.TRUE.equals(filme.getAtivo())) {
 	            throw new RuntimeException("Filme inativo.");
 	        }
-	        exemplar.setDataCadastro(new Date());
-	        exemplar.setAtivo(true);
-	        exemplar.setFilme(filme);
 
+	        Exemplar exemplar = exemplarDTO.constroiExemplar();
+	        exemplar.setFilme(filme);
 	        Exemplar salvo = exemplarRepository.save(exemplar);
 	        filmeService.atualizarExemplares(filme, 1);
-	        return salvo;
+	        return new ExemplarDTO(salvo);
 	    }
 
-	    public void deletarExemplar(Integer id) {
-	        Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();
-	        if (!exemplar.getAtivo()) return;
+	public void deletarExemplar(Integer id) {
+		Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();
+		if (!exemplar.getAtivo())
+			return;
 
-	        boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
-	        if (estaAlugado) {
-	            throw new RuntimeException("Exemplar está alugado.");
-	        }
+		boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
+		if (estaAlugado) {
+			throw new RuntimeException("Exemplar está alugado.");
+		}
 
-	        exemplar.setAtivo(false);
-	        exemplarRepository.save(exemplar);
-	        filmeService.atualizarExemplares(exemplar.getFilme(), -1);
-	    }
+		exemplar.setAtivo(false);
+		exemplarRepository.save(exemplar);
+		filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+	}
 
-	    public List<Exemplar> listarTodos() {
-	        return exemplarRepository.findAll();
-	    }
-	
+	public List<Exemplar> listarTodos() {
+		return exemplarRepository.findAll();
+	}
+
 }
