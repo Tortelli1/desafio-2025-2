@@ -6,11 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import br.edu.unoesc.model.Filme;
 
 public record FilmeDTO(
-		Integer id, 
+		Integer id,
 		Boolean ativo, 
-		Long exemplaresDisponiveis, 
-		String titulo, 
-		String resumo, 
+		Long exemplaresDisponiveis,
+		String titulo,
+		String resumo,
 		String pontuacao,
 		@DateTimeFormat(pattern = "yyyy-MM-dd")
 		Date lancamento

@@ -58,9 +58,14 @@ public class FilmeService {
         }
     }
     
-    
-    public FilmeDTO buscarPorId(Integer id) {
-        return FilmeDTO.configuraFilme(filmeRepository.findById(id).orElseThrow());
+
+    public Filme buscarPorId(Integer id) {
+        return filmeRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
     }
+    
+//    public FilmeDTO buscarPorId(Integer id) {
+//        return FilmeDTO.configuraFilme(filmeRepository.findById(id).orElseThrow());
+//    }
 	
 }

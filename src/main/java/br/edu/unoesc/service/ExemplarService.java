@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.DTO.ExemplarDTO;
-import br.edu.unoesc.DTO.FilmeDTO;
 import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.repository.ExemplarRepository;
@@ -22,20 +21,24 @@ public class ExemplarService {
 	private FilmeService filmeService;
 
 	@Autowired
-	private LocacaoRepository locacaoRepository;
+	private LocacaoRepository locacaoRepository;	
+	
+	public ExemplarDTO adicionarExemplar(ExemplarDTO exemplarDTO) {
+		Filme filme = filmeService.buscarPorId(exemplarDTO.filmeId());
 
-	public ExemplarDTO adicionarExemplar(ExemplarDTO exemplarDTO, FilmeDTO filmeDTO) {
-		 Filme filme = filmeDTO.constroiFilme();
-	        if (!Boolean.TRUE.equals(filme.getAtivo())) {
-	            throw new RuntimeException("Filme inativo.");
-	        }
+		if (!Boolean.TRUE.equals(filme.getAtivo())) {
+			throw new RuntimeException("Filme inativo.");
+		}
 
-	        Exemplar exemplar = exemplarDTO.constroiExemplar();
-	        exemplar.setFilme(filme);
-	        Exemplar salvo = exemplarRepository.save(exemplar);
-	        filmeService.atualizarExemplares(filme, 1);
-	        return new ExemplarDTO(salvo);
-	    }
+		Exemplar exemplar = exemplarDTO.constroiExemplar();
+		exemplar.setFilme(filme);
+		
+		Exemplar salvo = exemplarRepository.save(exemplar);
+		filmeService.atualizarExemplares(filme, 1);
+		
+		return new ExemplarDTO(salvo);
+	}
+	
 
 	public void deletarExemplar(Integer id) {
 		Exemplar exemplar = exemplarRepository.findById(id).orElseThrow();

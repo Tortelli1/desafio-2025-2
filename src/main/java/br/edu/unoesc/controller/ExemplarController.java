@@ -1,5 +1,7 @@
 package br.edu.unoesc.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.edu.unoesc.DTO.ExemplarDTO;
 import br.edu.unoesc.DTO.FilmeDTO;
-import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.service.ExemplarService;
 import br.edu.unoesc.service.FilmeService;
 
@@ -25,25 +26,31 @@ public class ExemplarController {
 
     @Autowired
     private FilmeService filmeService;
-	
+    
     @GetMapping("/cadastrar")
     public String cadastrarExemplar(Model model) {
-        model.addAttribute("filmes", filmeService.listarFilmesAtivos()); 
-        model.addAttribute("exemplar", ExemplarDTO.configuraExemplar(new Exemplar())); 
+        List<FilmeDTO> filmes = filmeService.listarFilmesAtivos();
+        model.addAttribute("filmes", filmes);
+        model.addAttribute("exemplar", new ExemplarDTO(null, null, null, null));
+
         return "paginas/cadastro/cadastrarExemplar";
     }
     
+
     @PostMapping("/salvar")
-    public String salvarExemplar(@ModelAttribute ExemplarDTO exemplarDTO, @ModelAttribute FilmeDTO filmeDTO,Model model) {
+    public String salvarExemplar(@ModelAttribute("exemplar") ExemplarDTO exemplarDTO, Model model) {
         try {
-            exemplarService.adicionarExemplar(exemplarDTO, filmeDTO);
+            exemplarService.adicionarExemplar(exemplarDTO);
             model.addAttribute("success", "Exemplar cadastrado com sucesso!");
-            return "redirect:/exemplar/listarExemplar";
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
+            model.addAttribute("error", "Erro ao cadastrar exemplar: " + e.getMessage());
             return "paginas/cadastro/cadastrarExemplar";
         }
+
+        return "redirect:/exemplar/cadastrar";
     }
+    
+
     
     @GetMapping("/listar")
     public String listarExemplares(Model model) {
