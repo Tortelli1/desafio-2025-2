@@ -19,7 +19,7 @@
         <form th:action="@{/exemplar/salvar}" th:object="${exemplarDTO}" method="post">
             <input type="hidden" th:field="*{id}" />
 
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label for="filmeId">Filme</label>
                 <select th:field="*{filmeId}" class="form-control" id="filmeId" required>
                     <option value="" disabled th:selected="*{filmeId} == null">Selecione um filme</option>
@@ -28,7 +28,17 @@
                             th:selected="*{filmeId} == ${filme.id}">
                     </option>
                 </select>
-            </div>
+            </div>-->
+			<div class="form-group">
+			    <label for="filmeId">Filme</label>
+			    <select th:field="*{filmeId}" class="form-control" id="filmeId" required>
+			        <option value="" selected>Selecione um filme</option>
+			        <option th:each="filme : ${filmes}" 
+			                th:value="${filme.id}" 
+			                th:text="${filme.titulo}">
+			        </option>
+			    </select>
+			</div>
 
             <div class="form-group">
                 <label for="ativo">Ativo</label>
