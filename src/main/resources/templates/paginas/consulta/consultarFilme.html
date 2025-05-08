@@ -40,14 +40,14 @@
 						th:classappend="${filme.ativo} ? 'text-success' : 'text-danger'"></td>
 					<td class="acao">
 						<a th:href="@{/filmes/editar/{id}(id=${filme.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
-						<button class="btn btn-danger btn-sm btn-excluir" th:attr="data-id=${filme.id}">Excluir</button>
+						<button class="btn btn-sm btn-danger btn-excluir" th:attr="data-id=${filme.id}">Excluir</button>
 					</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	
-	<script src="/js/consultar/consultarExemplar.js"></script>
+	<script src="/js/consultar/consultarFilme.js"></script>
 
 </body>
 </html>

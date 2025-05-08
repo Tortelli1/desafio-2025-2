@@ -94,3 +94,7 @@
     gap: 6px;
     align-items: center;
 }
+
+a {
+	text-decoration: none;
+}
