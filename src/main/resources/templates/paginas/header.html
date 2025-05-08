@@ -1,37 +1,23 @@
 <div th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <!-- Home -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <!-- Cadastro Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCadastro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Cadastro
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCadastro">
-                        <a class="dropdown-item" href="/filmes/cadastrar">Cadastrar Filme</a>
-                        <a class="dropdown-item" href="/exemplar/cadastrar">Cadastrar Exemplar</a>
-                        <a class="dropdown-item" href="#">Cadastrar Gênero</a>
-                    </div>
-                </li>
-                <!-- Consulta Dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownConsulta" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Consulta
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdownConsulta">
-                        <a class="dropdown-item" href="/filmes/consultar">Consultar Filmes</a>
-                        <a class="dropdown-item" href="/exemplar/consultar">Consultar Exemplares</a>
-                        <a class="dropdown-item" href="#">Consultar Gêneros</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Cadastro</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/filmes/cadastrar" target="_blank">Cadastro de Filmes</a></li>
+                    <li><a href="/exemplar/cadastrar" target="_blank">Cadastro de Exemplares</a></li>
+                    <li><a href="#" target="_blank">Cadastro de Locações</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Consulta</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/filmes/consultar" >Consulta de Filmes</a></li>
+                    <li><a href="/exemplar/consultar" >Consulta de Exemplares</a></li>
+                    <li><a href="#">Consulta de Locações</a></li>
+                </ul>
+            </li>
+        </ul>
     </nav>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body{
+    height: 100vh;
+}
+
+main{
+    height: 90vh;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+}
+
+main > p , h1{
+    width: 100vh;
+    text-align: center;
+}

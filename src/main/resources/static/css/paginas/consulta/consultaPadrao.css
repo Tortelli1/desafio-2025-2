@@ -1,0 +1,96 @@
+.container-consulta {
+    max-width: 1200px;
+    margin: 3rem auto; /* espaçamento lateral centralizado */
+    padding: 0 1rem;    /* padding lateral */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px; /* diminui o tamanho da fonte */
+}
+
+.table th, .table td {
+    padding: 8px; /* padding reduzido */
+    border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.table td {
+    background-color: #ffffff;
+    vertical-align: middle;
+}
+
+.table .status {
+    font-weight: bold;
+}
+
+.table .text-success {
+    color: green;
+}
+
+.table .text-danger {
+    color: red;
+}
+
+.table .btn {
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.table .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.table .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.table .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+}
+
+.table .btn-danger:hover {
+    background-color: #c82333;
+}
+
+.table .acao {
+    text-align: center;
+}
+
+/* Alertas de sucesso e erro */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.acao {
+    gap: 6px;
+    align-items: center;
+}

@@ -2,41 +2,44 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Exemplar</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cadastroPadrao.css">
+	<link rel="stylesheet" href="/css/paginas/header.css">
 </head>
 <body>
-<header th:insert="~{/paginas/header :: header}"></header>
+    <header th:insert="~{/paginas/header :: header}"></header>
 
-<section class="container mt-4" layout:fragment="corpo">
-    <h2 th:text="${exemplarDTO != null and exemplarDTO.id == null} ? 'Cadastrar Exemplar' : 'Editar Exemplar'"></h2>
+    <div class="container">
+        <h2 th:text="${exemplarDTO != null and exemplarDTO.id == null} ? 'Cadastrar Exemplar' : 'Editar Exemplar'"></h2>
 
-	<p>Valor atual de filmeId: <span th:text="*{filmeId}">nulo</span></p>
-	
-    <form th:action="@{/exemplar/salvar}" th:object="${exemplar}" method="post">
-        <input type="hidden" th:field="*{id}" />
+        <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
 
-        <div class="form-group">
-            <label for="filmeId">Filme</label>
-            <select th:field="*{filmeId}" class="form-control" id="filmeId" required>
-                <option value="" disabled th:selected="*{filmeId} == null">Selecione um filme</option>
-                <option th:each="filme : ${filmes}" th:value="${filme.id}"
-                        th:text="${filme.titulo}"
-                        th:selected="*{filmeId} == ${filme.id}">
-                </option>
-            </select>
-        </div>
+        <form th:action="@{/exemplar/salvar}" th:object="${exemplarDTO}" method="post">
+            <input type="hidden" th:field="*{id}" />
 
-        <div class="form-group mt-2">
-            <label for="ativo">Ativo</label>
-            <select th:field="*{ativo}" class="form-control">
-                <option value="true" th:selected="*{ativo} == true">Sim</option>
-                <option value="false" th:selected="*{ativo} == false">Não</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="filmeId">Filme</label>
+                <select th:field="*{filmeId}" class="form-control" id="filmeId" required>
+                    <option value="" disabled th:selected="*{filmeId} == null">Selecione um filme</option>
+                    <option th:each="filme : ${filmes}" th:value="${filme.id}" 
+                            th:text="${filme.titulo}" 
+                            th:selected="*{filmeId} == ${filme.id}">
+                    </option>
+                </select>
+            </div>
 
-        <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-    </form>
-</section>
+            <div class="form-group">
+                <label for="ativo">Ativo</label>
+                <select th:field="*{ativo}" class="form-control" id="ativo">
+                    <option value="true" th:selected="*{ativo} == true">Sim</option>
+                    <option value="false" th:selected="*{ativo} == false">Não</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -56,11 +56,19 @@ public class ExemplarController {
         return "paginas/consulta/consultarExemplar";
     }
     
+//    @GetMapping("/cadastrar")
+//    public String cadastrarExemplar(Model model) {
+//        List<FilmeDTO> filmes = filmeService.listarFilmesAtivos();
+//        model.addAttribute("filmes", filmes);
+//        model.addAttribute("exemplar", new ExemplarDTO(null, null, null, null, null));
+//
+//        return "paginas/cadastro/cadastrarExemplar";
+//    }
     @GetMapping("/cadastrar")
-    public String cadastrarExemplar(Model model) {
+    public String cadastrarExemplar(ExemplarDTO exemplarDTO, Model model) {
         List<FilmeDTO> filmes = filmeService.listarFilmesAtivos();
         model.addAttribute("filmes", filmes);
-        model.addAttribute("exemplar", new ExemplarDTO(null, null, null, null, null));
+        model.addAttribute("exemplarDTO", exemplarDTO);  // Passando exemplarDTO ao model
 
         return "paginas/cadastro/cadastrarExemplar";
     }

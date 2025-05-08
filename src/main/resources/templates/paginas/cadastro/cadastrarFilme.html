@@ -4,61 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Filme</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/cadastroPadrao.css">
+    <link rel="stylesheet" href="/css/paginas/header.css">
 </head>
 <body>
-	<header th:insert="~{/paginas/header :: header}"></header>
-    <div class="container mt-5">
-        <h2>Cadastrar Filme</h2>
-		
-		<div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
-		<div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
-		
-        <div class="form-group col-md-6">
-            <label for="buscaTitulo">Buscar Filme</label>
-            <input type="text" class="form-control" id="buscaTitulo" placeholder="Digite o título do filme..." />
-            <div id="sugestoes" class="list-group mt-1"></div>
+    <!-- Cabeçalho fixo -->
+    <header th:insert="~{/paginas/header :: header}"></header>
+
+    <!-- Conteúdo principal -->
+    <div class="container mt-5 d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="w-100" style="max-width: 600px;">
+            <h2 class="text-center">Cadastrar Filme</h2>
+        
+            <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+            <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+            
+            <!-- Campo de busca -->
+            <div class="form-group">
+                <label for="buscaTitulo">Buscar Filme</label>
+                <input type="text" class="form-control" id="buscaTitulo" placeholder="Digite o título do filme..." />
+                <div id="sugestoes" class="list-group mt-1"></div>
+            </div>
+
+            <!-- Formulário de cadastro -->
+            <form id="filmeForm" th:action="@{${filmeDTO.id == null} ? '/filmes/salvar' : '/filmes/editar'}" th:object="${filmeDTO}" method="POST">
+                <div class="form-group">
+                    <label for="titulo">Título</label>
+                    <input type="text" class="form-control" id="titulo" th:field="*{titulo}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="resumo">Resumo</label>
+                    <textarea class="form-control" id="resumo" th:field="*{resumo}" rows="3" readonly></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="pontuacao">Pontuação</label>
+                    <input type="text" class="form-control" id="pontuacao" th:field="*{pontuacao}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="lancamento">Lançamento</label>
+                    <input type="date" class="form-control" id="lancamento" th:field="*{lancamento}" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="exemplaresDisponiveis">Número de Exemplares</label>
+                    <input type="number" class="form-control" id="exemplaresDisponiveis" th:field="*{exemplaresDisponiveis}" readonly/>
+                </div>
+
+                <div class="form-group">
+                    <label for="ativo">Ativo</label>
+                    <select id="ativo" class="form-control" th:field="*{ativo}">
+                        <option value="">Selecione...</option>
+                        <option th:value="true">Sim</option>
+                        <option th:value="false">Não</option>
+                    </select>
+                </div>
+
+                <input type="hidden" id="id" th:field="*{id}" />
+                <button type="submit" class="btn btn-primary btn-sm w-100">Salvar</button>
+            </form>
         </div>
-
-        <form id="filmeForm" th:action="@{${filmeDTO.id == null} ? '/filmes/salvar' : '/filmes/editar'}" th:object="${filmeDTO}" method="POST">
-              
-            <div class="form-group col-md-6">
-                <label for="titulo">Título</label>
-                <input type="text" class="form-control" id="titulo" th:field="*{titulo}" readonly />
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="resumo">Resumo</label>
-                <textarea class="form-control" id="resumo" th:field="*{resumo}" rows="3" readonly></textarea>
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="pontuacao">Pontuação</label>
-                <input type="text" class="form-control" id="pontuacao" th:field="*{pontuacao}" readonly />
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="lancamento">Lançamento</label>
-                <input type="date" class="form-control" id="lancamento" th:field="*{lancamento}" readonly />
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="exemplaresDisponiveis">Número de Exemplares</label>
-                <input type="number" class="form-control" id="exemplaresDisponiveis" th:field="*{exemplaresDisponiveis}" readonly/>
-            </div>
-
-            <div class="form-group col-md-6">
-                <label for="ativo">Ativo</label>
-                <select id="ativo" class="form-control" th:field="*{ativo}">
-                    <option value="">Selecione...</option>
-                    <option th:value="true">Sim</option>
-                    <option th:value="false">Não</option>
-                </select>
-            </div>
-
-            <input type="hidden" id="id" th:field="*{id}" />
-            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
-        </form>
     </div>
 
     <script src="/js/cadastrar/cadastrarFilme.js"></script>

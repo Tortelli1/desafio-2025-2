@@ -1,47 +1,49 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8" />
-    <title>Consultar Exemplares</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Consulta de Exemplares</title>
+    <link rel="stylesheet" href="/css/paginas/consulta/consultaPadrao.css">
+	<link rel="stylesheet" href="/css/paginas/header.css">
 </head>
 <body>
-    <header th:insert="~{/paginas/header :: header}"></header>
 
-    <div class="container mt-5">
-        <h2>Exemplares Cadastrados</h2>
+	<header th:insert="~{/paginas/header :: header}"></header>
+	
+	<div class="container-consulta mt-5">
+	    <h2>Exemplares Cadastrados</h2>
 
-        <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
-        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+	    <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+	    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-        <table class="table table-bordered table-striped mt-4">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Título do Filme</th>
-                    <th>Data de Cadastro</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="exemplar : ${exemplares}">
-                    <td th:text="${exemplar.id}">1</td>
-                    <td th:text="${exemplar.filmeTitulo}">Filme Exemplo</td>
-                    <td th:text="${#dates.format(exemplar.dataCadastro, 'dd/MM/yyyy HH:mm')}">01/01/2024</td>
-                    <td>
-                        <span th:text="${exemplar.ativo} ? 'Ativo' : 'Inativo'"
-                              th:classappend="${exemplar.ativo} ? 'text-success' : 'text-danger'"></span>
-                    </td>
-                    <td>
-                        <a th:href="@{/exemplar/editar/{id}(id=${exemplar.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
-                        <button class="btn btn-sm btn-danger btn-excluir" th:attr="data-id=${exemplar.id}">Excluir</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+	    <!-- Tabela de Exemplares -->
+	    <table class="table">
+	        <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>Título do Filme</th>
+	                <th>Data de Cadastro</th>
+	                <th>Status</th>
+	                <th>Ações</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+	            <tr th:each="exemplar : ${exemplares}">
+	                <td th:text="${exemplar.id}">1</td>
+	                <td th:text="${exemplar.filmeTitulo}">Filme Exemplo</td>
+	                <td th:text="${#dates.format(exemplar.dataCadastro, 'dd/MM/yyyy HH:mm')}">01/01/2024</td>
+	                <td class="status" th:text="${exemplar.ativo} ? 'Ativo' : 'Inativo'" 
+	                    th:classappend="${exemplar.ativo} ? 'text-success' : 'text-danger'"></td>
+	                <td class="acao">
+	                    <a th:href="@{/exemplar/editar/{id}(id=${exemplar.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
+	                    <button class="btn btn-sm btn-danger btn-excluir" th:attr="data-id=${exemplar.id}">Excluir</button>
+	                </td>
+	            </tr>
+	        </tbody>
+	    </table>
+	</div>
 
-    <script src="/js/consultar/consultarExemplar.js"></script>
+	<script src="/js/consultar/consultarExemplar.js"></script>
+	
 </body>
 </html>
