@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,8 @@ public class LocacaoController {
     }
 
     @GetMapping("/cadastrar")
-    public String mostrarFormularioCadastro(Model model) {
+    public String cadastrarLocacoes(LocacaoDTO locacaoDTO, Model model) {
+    	model.addAttribute("locacaoDTO", locacaoDTO);
         model.addAttribute("exemplares", exemplarService.listarExemplaresAtivos());
         return "paginas/cadastro/cadastrarLocacao";
     }
@@ -48,4 +50,33 @@ public class LocacaoController {
             return "redirect:/locacoes/cadastrar";
         }
     }
+    
+    @GetMapping("/editar/{id}")
+    public String editarLocacao(@PathVariable Integer id, Model model) {
+        LocacaoDTO locacaoDTO = locacaoService.buscarDtoPorId(id);
+        if (locacaoDTO == null) {
+            model.addAttribute("erro", "Locação não encontrada.");
+            return "redirect:/locacoes/consultar";
+        }
+
+        model.addAttribute("locacaoDTO", locacaoDTO);
+        model.addAttribute("exemplares", exemplarService.listarExemplaresAtivos());
+
+        return "paginas/cadastro/cadastrarLocacao";
+    }
+    
+    @PostMapping("/atualizar")
+    public String atualizarLocacao(@ModelAttribute LocacaoDTO locacaoDTO,
+                                   @RequestParam("exemplarIds") List<Integer> exemplarIds,
+                                   RedirectAttributes attr) {
+        try {
+            locacaoService.atualizarLocacao(locacaoDTO, exemplarIds);
+            attr.addFlashAttribute("success", "Locação atualizada com sucesso!");
+            return "redirect:/locacoes/consultar";
+        } catch (Exception e) {
+            attr.addFlashAttribute("error", "Erro ao atualizar locação.");
+            return "redirect:/locacoes/editar/" + locacaoDTO.id();
+        }
+    }
+    
 }
