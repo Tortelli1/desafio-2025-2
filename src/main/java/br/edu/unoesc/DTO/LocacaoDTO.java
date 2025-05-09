@@ -4,6 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Locacao;
 
 public record LocacaoDTO(
@@ -11,11 +14,27 @@ public record LocacaoDTO(
 	    String nome, 
 	    String cpf, 
 	    String email, 
-	    String telefone, 
-	    Date dataLocacao, 
-	    Date dataDevolucao, 
-	    Date dataDevolvido
+	    String telefone,
+	    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	    Date dataLocacao,
+	    @DateTimeFormat(pattern = "yyyy-MM-dd")
+	    Date dataDevolucao,
+	    Date dataDevolvido,
+	    String qrCode
 		) {
+	
+    public Locacao constroiLocacao(List<Exemplar> exemplares) {
+        Locacao locacao = new Locacao();
+        locacao.setNome(this.nome);
+        locacao.setCpf(this.cpf);
+        locacao.setEmail(this.email);
+        locacao.setTelefone(this.telefone);
+        locacao.setDataLocacao(this.dataLocacao);
+        locacao.setDataDevolucao(this.dataDevolucao);
+        locacao.setDataDevolvido(this.dataDevolvido);
+        locacao.setExemplares(exemplares);
+        return locacao;
+    }
 	
 	public LocacaoDTO(Locacao locacao) {
         this(
@@ -28,7 +47,8 @@ public record LocacaoDTO(
             locacao.getTelefone(),
             locacao.getDataLocacao(),
             locacao.getDataDevolucao(),
-            locacao.getDataDevolvido()
+            locacao.getDataDevolvido(),
+            locacao.getQrCode()
         );
     }
 

@@ -1,41 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const buscarExemplarInput = document.getElementById("buscarFilme");
-    const listaExemplaresDiv = document.getElementById("lista-filmes");
-    const formLocacao = document.getElementById("formLocacao");
+document.addEventListener("DOMContentLoaded", function () {
+    const cpfInput = document.getElementById("cpf");
+    const telefoneInput = document.getElementById("telefone");
 
-    function exibirExemplares(exemplares) {
-        listaExemplaresDiv.innerHTML = '';
-        exemplares.forEach(exemplar => {
-            const div = document.createElement("div");
-            div.classList.add("list-group-item");
-            div.textContent = `${exemplar.filmeTitulo} - ID: ${exemplar.id}`;
-            div.addEventListener("click", () => {
-                buscarExemplarInput.value = exemplar.filmeTitulo;
-                formLocacao.exemplarId.value = exemplar.id;
-                listaExemplaresDiv.innerHTML = '';
-            });
-            listaExemplaresDiv.appendChild(div);
-        });
-    }
+    cpfInput.addEventListener("input", function () {
+        let value = cpfInput.value.replace(/\D/g, ""); // Remove tudo que não é número
+        if (value.length > 11) value = value.slice(0, 11);
+        cpfInput.value = value
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    });
 
-    function buscarExemplares(query) {
-        if (!query) {
-            listaExemplaresDiv.innerHTML = ''; 
-            return;
-        }
-
-        fetch(`/exemplares/buscar?titulo=${query}`)
-            .then(response => response.json())
-            .then(exemplares => {
-                exibirExemplares(exemplares);
-            })
-            .catch(err => {
-                console.error('Erro ao buscar exemplares', err);
-            });
-    }
-
-    buscarExemplarInput.addEventListener("input", function(event) {
-        const query = event.target.value.trim();
-        buscarExemplares(query);
+    telefoneInput.addEventListener("input", function () {
+        let value = telefoneInput.value.replace(/\D/g, ""); // Remove tudo que não é número
+        if (value.length > 11) value = value.slice(0, 11);
+        telefoneInput.value = value
+            .replace(/(\d{2})(\d)/, "($1) $2")
+            .replace(/(\d{5})(\d{4})$/, "$1-$2");
     });
 });

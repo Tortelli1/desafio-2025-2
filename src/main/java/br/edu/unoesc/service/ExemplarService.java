@@ -88,10 +88,22 @@ public class ExemplarService {
     
     public List<ExemplarDTO> listarExemplaresPorFilme(Integer filmeId) {
         Filme filme = filmeService.buscarPorId(filmeId);
-        List<Exemplar> exemplaresAtivos = exemplarRepository.findByFilmeIdAndAtivoTrue(filmeId);
+        List<Exemplar> exemplaresAtivos = exemplarRepository.findByFilmeId(filmeId);
         
         return exemplaresAtivos.stream()
                                .map(exemplar -> new ExemplarDTO(exemplar))
                                .collect(Collectors.toList());
     }
+    
+    public List<ExemplarDTO> listarExemplaresAtivos() {
+        List<Exemplar> exemplares = exemplarRepository.findByAtivoTrue();
+        return exemplares.stream()
+                         .map(ExemplarDTO::new)
+                         .collect(Collectors.toList());
+    }
+    
+    public List<Exemplar> buscarPorId(List<Integer> idsExemplares) {
+        return exemplarRepository.findAllById(idsExemplares);
+    }
+    
 }

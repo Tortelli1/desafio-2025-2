@@ -35,7 +35,8 @@ public class Locacao {
 	@Column(name = "DATA_DEVOLVIDO")
 	private Date dataDevolvido;
 	
-	@Column(name = "QR_CODE")
+	@Lob
+	@Column(name = "QR_CODE", columnDefinition = "LONGTEXT")
 	private String qrCode;
 	
 	@ManyToMany

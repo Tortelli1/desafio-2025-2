@@ -10,7 +10,9 @@ import br.edu.unoesc.model.Exemplar;
 @Repository
 public interface ExemplarRepository extends JpaRepository<Exemplar, Integer> {
 
-	List<Exemplar> findByFilmeIdAndAtivoTrue(Integer filmeId);
+	List<Exemplar> findByFilmeId(Integer filmeId);
+	
+	List<Exemplar> findByAtivoTrue();
 	
 	List<Exemplar> findAll();
 }
