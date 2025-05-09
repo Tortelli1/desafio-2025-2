@@ -36,11 +36,11 @@
             </thead>
             <tbody>
                 <tr th:each="locacao : ${locacoes}">
-                    <td th:text="${locacao.nome}">Nome da Locação</td>
-                    <td th:text="${locacao.cpf}">123.456.789-00</td>
-                    <td th:text="${locacao.email}">email@dominio.com</td>
-                    <td th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}">01/01/2024</td>
-                    <td th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}">01/02/2024</td>
+                    <td th:text="${locacao.nome}"></td>
+                    <td th:text="${locacao.cpf}"></td>
+                    <td th:text="${locacao.email}"></td>
+                    <td th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></td>
                     <td>
                         <a th:href="@{'/locacoes/qr/' + ${locacao.id}}" target="_blank">Ver QR Code</a>
                     </td>

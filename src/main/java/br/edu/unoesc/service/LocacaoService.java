@@ -1,5 +1,6 @@
 package br.edu.unoesc.service;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ public class LocacaoService {
 
     @Autowired
     private ExemplarService exemplarService;
+    
+    @Autowired
+    private QRCodeService qrCodeService;
 
     public List<Locacao> listarLocacoesPendentes() {
         return locacaoRepository.findByDataDevolvidoIsNull();
@@ -24,18 +28,30 @@ public class LocacaoService {
 
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);
-        Locacao locacao = new Locacao(locacaoDTO);
+        
+        Locacao locacao = locacaoDTO.constroiLocacao(exemplares);
+        locacao.setNome(locacaoDTO.nome());
+        locacao.setCpf(locacaoDTO.cpf());
+        locacao.setEmail(locacaoDTO.email());
+        locacao.setTelefone(locacaoDTO.telefone());
+        locacao.setDataLocacao(new Date());
+        locacao.setDataDevolucao(locacaoDTO.dataDevolucao());
         locacao.setExemplares(exemplares);
+
+        String qrCode = qrCodeService.gerarQrCode(locacao);
+        locacao.setQrCode(qrCode);
+
         locacaoRepository.save(locacao);
     }
-
+    
     public void atualizarLocacao(LocacaoDTO dto, List<Integer> exemplarIds) {
         Locacao locacao = locacaoRepository.findById(dto.id())
             .orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
         locacao.setNome(dto.nome());
         locacao.setCpf(dto.cpf());
-        locacao.setDataLocacao(dto.dataLocacao());
-        locacao.setDataDevolvido(dto.dataDevolvido());
+        locacao.setEmail(dto.email());
+        locacao.setDataLocacao(new Date());
+        locacao.setDataDevolucao(dto.dataDevolucao());
 
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);
         locacao.setExemplares(exemplares);
