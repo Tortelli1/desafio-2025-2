@@ -2,8 +2,11 @@ package br.edu.unoesc.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -76,6 +79,28 @@ public class LocacaoController {
         } catch (Exception e) {
             attr.addFlashAttribute("error", "Erro ao atualizar locação.");
             return "redirect:/locacoes/editar/" + locacaoDTO.id();
+        }
+    }
+    
+    @PostMapping("/devolucao")
+    public String confirmarDevolucao(@RequestParam List<Integer> exemplarIds, @RequestParam Integer locacaoId, RedirectAttributes attr) {
+        try {
+            locacaoService.processarDevolucao(locacaoId, exemplarIds);
+            attr.addFlashAttribute("success", "Devolução realizada com sucesso!");
+            return "redirect:/locacoes/consultar";
+        } catch (Exception e) {
+            attr.addFlashAttribute("error", "Erro ao realizar devolução: " + e.getMessage());
+            return "redirect:/locacoes/devolucao/" + locacaoId;
+        }
+    }
+    
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<String> deletarLocacao(@PathVariable Integer id) {
+        try {
+            locacaoService.excluirLocacao(id);
+            return ResponseEntity.ok("Locação excluída com sucesso!");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
     

@@ -53,9 +53,7 @@ public class ExemplarService {
 
 	    if (exemplar.getAtivo()) {
 	        Filme filme = exemplar.getFilme();
-	        
 	        filmeService.atualizarExemplares(filme, -1);
-
 	        exemplar.setAtivo(false);
 	        exemplarRepository.save(exemplar);
 	    }
@@ -87,7 +85,7 @@ public class ExemplarService {
     }
     
     public List<ExemplarDTO> listarExemplaresPorFilme(Integer filmeId) {
-        Filme filme = filmeService.buscarPorId(filmeId);
+        filmeService.buscarPorId(filmeId);
         List<Exemplar> exemplaresAtivos = exemplarRepository.findByFilmeId(filmeId);
         
         return exemplaresAtivos.stream()

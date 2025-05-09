@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.DTO.LocacaoDTO;
 import br.edu.unoesc.model.Exemplar;
+import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.model.Locacao;
 import br.edu.unoesc.repository.LocacaoRepository;
 
@@ -18,6 +19,9 @@ public class LocacaoService {
 
     @Autowired
     private ExemplarService exemplarService;
+
+    @Autowired
+    private FilmeService filmeService;
     
     @Autowired
     private QRCodeService qrCodeService;
@@ -28,6 +32,11 @@ public class LocacaoService {
 
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);
+        exemplares.forEach(exemplar -> {
+            if (!exemplar.getAtivo()) {
+                throw new IllegalArgumentException("Exemplar não disponível para locação.");
+            }
+        });
         
         Locacao locacao = locacaoDTO.constroiLocacao(exemplares);
         locacao.setNome(locacaoDTO.nome());
@@ -41,12 +50,18 @@ public class LocacaoService {
         String qrCode = qrCodeService.gerarQrCode(locacao);
         locacao.setQrCode(qrCode);
 
+        exemplares.forEach(exemplar -> {
+            Filme filme = exemplar.getFilme();
+            filmeService.atualizarExemplares(filme, -1);
+        });
+        
         locacaoRepository.save(locacao);
     }
     
     public void atualizarLocacao(LocacaoDTO dto, List<Integer> exemplarIds) {
         Locacao locacao = locacaoRepository.findById(dto.id())
             .orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
+        
         locacao.setNome(dto.nome());
         locacao.setCpf(dto.cpf());
         locacao.setEmail(dto.email());
@@ -56,9 +71,30 @@ public class LocacaoService {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);
         locacao.setExemplares(exemplares);
 
+        exemplares.forEach(exemplar -> {
+            Filme filme = exemplar.getFilme();
+            filmeService.atualizarExemplares(filme, -1);
+        });
+        
         locacaoRepository.save(locacao);
     }
     
+    public void processarDevolucao(Integer locacaoId, List<Integer> exemplarIds) {
+        Locacao locacao = locacaoRepository.findById(locacaoId)
+                .orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
+        
+        List<Exemplar> exemplaresDevolvidos = exemplarService.buscarPorId(exemplarIds);
+        
+        exemplaresDevolvidos.forEach(exemplar -> {
+            Filme filme = exemplar.getFilme();
+            filmeService.atualizarExemplares(filme, 1);
+            exemplar.setAtivo(true);
+        });
+        
+        locacao.getExemplares().removeAll(exemplaresDevolvidos);
+
+        locacaoRepository.save(locacao);
+    }
     
     public LocacaoDTO buscarDtoPorId(Integer id) {
         Locacao locacao = locacaoRepository.findById(id).orElse(null);

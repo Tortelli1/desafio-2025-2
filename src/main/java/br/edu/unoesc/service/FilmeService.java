@@ -38,7 +38,6 @@ public class FilmeService {
     	filme.setExemplaresDisponiveis(0L);
         return filmeRepository.save(filme);
     }
-
     
     public void atualizarFilme(FilmeDTO dto) {
         Filme existente = filmeRepository.findById(dto.id()).orElseThrow();
@@ -60,7 +59,6 @@ public class FilmeService {
             throw new RuntimeException("Filme não encontrado!");
         }
     }
-    
 
     public FilmeDTO buscarDtoPorId(Integer id) {
         Filme filme = filmeRepository.findById(id)
