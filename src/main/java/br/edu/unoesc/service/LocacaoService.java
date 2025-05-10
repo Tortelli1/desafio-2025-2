@@ -30,6 +30,10 @@ public class LocacaoService {
         return locacaoRepository.findByDataDevolvidoIsNull();
     }
 
+    public List<Locacao> buscarLocacoesPendentesPorCpf(String cpf) {
+        return locacaoRepository.findByCpfAndDataDevolvidoIsNull(cpf);
+    }
+    
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);
         exemplares.forEach(exemplar -> {

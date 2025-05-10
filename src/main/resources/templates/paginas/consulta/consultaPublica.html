@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Consulta Pública de Locações</title>
+    <link rel="stylesheet" href="/css/paginas/consulta/consultaPublica.css">
+	<link rel="stylesheet" href="/css/paginas/header.css">
+</head>
+<body>
+
+	<header th:insert="~{/paginas/header :: header}"></header>
+
+	<div class="container-consulta">
+	    <h2>Consulta de Locações Ativas por CPF</h2>
+
+	    <form method="get" th:action="@{/consultaPublica/resultado}">
+	        <label for="cpf">Digite o CPF:</label>
+	        <input type="text" id="cpf" name="cpf" maxlength="14" required>
+	        <button type="submit" class="btn btn-primary">Consultar</button>
+	    </form>
+
+	    <div th:if="${locacoes != null}">
+	        <h3 class="mt-5">Resultados:</h3>
+
+			<div th:if="${locacoes.empty}">
+	            <div class="alert alert-danger">Nenhuma locação pendente encontrada para o CPF informado.</div>
+	        </div>
+
+	        <div th:if="${!locacoes.empty}">
+	            <div th:each="locacao : ${locacoes}" class="mt-5">
+	                <p><strong>Nome:</strong> <span th:text="${locacao.nome}"></span></p>
+	                <p><strong>Email:</strong> <span th:text="${locacao.email}"></span></p>
+	                <p><strong>Telefone:</strong> <span th:text="${locacao.telefone}"></span></p>
+	                <p><strong>Data Locação:</strong> <span
+	                        th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}"></span></p>
+	                <p><strong>Data Devolução Prevista:</strong> <span
+	                        th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></span></p>
+
+	                <p><strong>Filmes Alocados:</strong></p>
+	                <ul>
+	                    <li th:each="exemplar : ${locacao.exemplares}" th:text="${exemplar.filme.titulo}"></li>
+	                </ul>
+
+	                <div>
+	                    <p><strong>QR Code:</strong></p>
+	                    <img th:src="'data:image/png;base64,' + ${imagemBase64}" alt="Imagem">
+	                </div>
+
+	                <hr>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+
+<script src="/js/consultar/consultaPublica.js"></script>
+</body>
+</html>

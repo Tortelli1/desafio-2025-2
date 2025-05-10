@@ -1,0 +1,76 @@
+.container-consulta {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+    font-family: Arial, sans-serif;
+}
+
+h2, h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+    width: 250px;
+}
+
+button {
+    padding: 8px 14px;
+    font-size: 14px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.mt-5 {
+    margin-top: 3rem;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.alert-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+p, ul {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+img {
+    max-width: 200px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background-color: #fff;
+}

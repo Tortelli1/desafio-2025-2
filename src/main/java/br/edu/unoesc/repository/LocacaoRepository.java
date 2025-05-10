@@ -17,4 +17,6 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Integer> {
     List<Locacao> findByDataDevolvidoIsNull();
 
     List<Locacao> findByDataDevolvidoIsNotNull();
+    
+    List<Locacao> findByCpfAndDataDevolvidoIsNull(String cpf);
 }

@@ -12,16 +12,17 @@ import java.util.Base64;
 @Service
 public class QRCodeService {
 
-    private static final String QR_CODE_API_URL = "https://api.apgy.in/qr/";
+    private static final String QR_CODE_API_URL = "https://api.apgy.in/qr/?data={data}&size={size}";
 
     public String gerarQrCode(Locacao locacao) {
-        String urlQRCode = "http://localhost:8080//locacoes/" + locacao.getId();
+        String urlQRCode = "http://localhost:8080/locacoes/" + locacao.getId();
         String requestUrl = UriComponentsBuilder.fromUriString(QR_CODE_API_URL)
                 .queryParam("data", urlQRCode)
-                .queryParam("size", 300)
+                .queryParam("size", String.valueOf(300))
                 .toUriString();
 
         RestTemplate restTemplate = new RestTemplate();
+        
         ResponseEntity<byte[]> response = restTemplate.exchange(
                 requestUrl,
                 HttpMethod.GET,
