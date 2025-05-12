@@ -1,8 +1,6 @@
 package br.edu.unoesc.controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,21 +33,6 @@ public class ExemplarController {
     public String listarExemplares(Model model) {
         List<ExemplarDTO> exemplares = exemplarService.listarTodos();
         List<FilmeDTO> filmes = filmeService.listarTodos();
-        exemplares.forEach(exemplar -> {
-            Optional<FilmeDTO> filme = filmes.stream()
-                .filter(f -> f.id().equals(exemplar.filmeId()))
-                .findFirst();
-
-            filme.ifPresent(f -> {
-                new ExemplarDTO(
-                    exemplar.id(),
-                    exemplar.dataCadastro(),
-                    exemplar.ativo(),
-                    exemplar.filmeId(),
-                    f.titulo()
-                );
-            });
-        });
         model.addAttribute("exemplares", exemplares);
         model.addAttribute("filmes", filmes);
         

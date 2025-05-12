@@ -31,9 +31,19 @@ public class LocacaoController {
     private ExemplarService exemplarService;
 
     @GetMapping("/consultar")
-    public String consultarLocacoes(Model model) {
-        model.addAttribute("pendentes", locacaoService.listarPendentes());
-        model.addAttribute("devolvidos", locacaoService.listarDevolvidos());
+    public String consultarLocacoes(
+    		@RequestParam(value = "cpf", required = false) String cpf,
+    	    @RequestParam(value = "nome", required = false) String nome,
+    	    @RequestParam(value = "email", required = false) String email,
+    	    Model model) {
+
+        List<Locacao> locacoes = locacaoService.buscarLocacoes(cpf, nome, email);
+
+        model.addAttribute("locacoes", locacoes);
+        model.addAttribute("cpf", cpf);
+        model.addAttribute("nome", nome);
+        model.addAttribute("email", email);
+        
         return "paginas/consulta/consultarLocacao";
     }
 
@@ -51,6 +61,7 @@ public class LocacaoController {
             attr.addFlashAttribute("success", "Locação realizada com sucesso!");
             return "redirect:/locacoes/consultar";
         } catch (Exception e) {
+        	// nao devolver as mensagens de erro diretamente, dizer somente que ocooreu um erro ao deletar
             attr.addFlashAttribute("error", "Erro ao realizar locação: " + e.getMessage());
             return "redirect:/locacoes/cadastrar";
         }
@@ -93,6 +104,7 @@ public class LocacaoController {
             attr.addFlashAttribute("success", "Devolução realizada com sucesso!");
             return "redirect:/locacoes/consultar";
         } catch (Exception e) {
+        	// nao devolver as mensagens de erro diretamente, dizer somente que ocooreu um erro ao deletar
             attr.addFlashAttribute("error", "Erro ao realizar devolução: " + e.getMessage());
             return "redirect:/locacoes/devolver/" + locacaoId;
         }
@@ -107,6 +119,7 @@ public class LocacaoController {
             
             return "/paginas/devolverLocacao";
         } catch (IllegalArgumentException e) {
+        	// nao devolver as mensagens de erro diretamente, dizer somente que ocooreu um erro ao deletar
             model.addAttribute("error", e.getMessage());
             return "redirect:/locacoes/consultar";
         }
@@ -118,6 +131,7 @@ public class LocacaoController {
             locacaoService.excluirLocacao(id);
             return ResponseEntity.ok("Locação excluída com sucesso!");
         } catch (RuntimeException e) {
+        	// nao devolver as mensagens de erro diretamente, dizer somente que ocooreu um erro ao deletar
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
