@@ -82,7 +82,7 @@ public class LocacaoController {
         }
     }
     
-    @PostMapping("/devolucao")
+    @PostMapping("/devolver")
     public String confirmarDevolucao(@RequestParam List<Integer> exemplarIds, @RequestParam Integer locacaoId, RedirectAttributes attr) {
         try {
             locacaoService.processarDevolucao(locacaoId, exemplarIds);
@@ -90,7 +90,7 @@ public class LocacaoController {
             return "redirect:/locacoes/consultar";
         } catch (Exception e) {
             attr.addFlashAttribute("error", "Erro ao realizar devolução: " + e.getMessage());
-            return "redirect:/locacoes/devolucao/" + locacaoId;
+            return "redirect:/locacoes/devolver/" + locacaoId;
         }
     }
     

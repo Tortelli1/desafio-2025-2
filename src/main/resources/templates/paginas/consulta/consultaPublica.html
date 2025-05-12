@@ -31,11 +31,8 @@
 	                <p><strong>Nome:</strong> <span th:text="${locacao.nome}"></span></p>
 	                <p><strong>Email:</strong> <span th:text="${locacao.email}"></span></p>
 	                <p><strong>Telefone:</strong> <span th:text="${locacao.telefone}"></span></p>
-	                <p><strong>Data Locação:</strong> <span
-	                        th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}"></span></p>
-	                <p><strong>Data Devolução Prevista:</strong> <span
-	                        th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></span></p>
-
+	                <p><strong>Data Locação:</strong> <span th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}"></span></p>
+	                <p><strong>Data Devolução Prevista:</strong> <span th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></span></p>
 	                <p><strong>Filmes Alocados:</strong></p>
 	                <ul>
 	                    <li th:each="exemplar : ${locacao.exemplares}" th:text="${exemplar.filme.titulo}"></li>
@@ -43,7 +40,7 @@
 
 	                <div>
 	                    <p><strong>QR Code:</strong></p>
-	                    <img th:src="'data:image/png;base64,' + ${imagemBase64}" alt="Imagem">
+	                    <img th:src="${qrCodes[locacao.id]}" alt="QR Code">
 	                </div>
 
 	                <hr>

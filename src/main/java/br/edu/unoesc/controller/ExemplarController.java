@@ -41,7 +41,7 @@ public class ExemplarController {
                 .findFirst();
 
             filme.ifPresent(f -> {
-                ExemplarDTO exemplarAtualizado = new ExemplarDTO(
+                new ExemplarDTO(
                     exemplar.id(),
                     exemplar.dataCadastro(),
                     exemplar.ativo(),
@@ -79,7 +79,7 @@ public class ExemplarController {
     }
     
     @PostMapping("/editar")
-    public String salvarEdicaoExemplar(@ModelAttribute ExemplarDTO exemplarDTO, RedirectAttributes attr) {
+    public String salvarExemplar(@ModelAttribute ExemplarDTO exemplarDTO, RedirectAttributes attr) {
         try {
             exemplarService.inativarExemplar(exemplarDTO);
             attr.addFlashAttribute("success", "Exemplar inativado com sucesso!");
