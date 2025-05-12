@@ -39,7 +39,19 @@ public class LocacaoService {
     }
 
     public List<Locacao> buscarLocacoesPendentesPorCpf(String cpf) {
-        return locacaoRepository.findByCpfAndDataDevolvidoIsNull(cpf);
+        return locacaoRepository.findByCpf(cpf);
+    }
+    
+    public List<Locacao> buscarLocacoes(String cpf, String nome, String email) {
+        if (cpf != null && !cpf.isEmpty()) {
+            return locacaoRepository.findByCpf(cpf);
+        } else if (nome != null && !nome.isEmpty()) {
+            return locacaoRepository.findByNome(nome);
+        } else if (email != null && !email.isEmpty()) {
+            return locacaoRepository.findByEmail(email);
+        } else {
+            return locacaoRepository.findAll();
+        }
     }
     
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
@@ -51,13 +63,6 @@ public class LocacaoService {
         });
         
         Locacao locacao = locacaoDTO.constroiLocacao(exemplares);
-        locacao.setNome(locacaoDTO.nome());
-        locacao.setCpf(locacaoDTO.cpf());
-        locacao.setEmail(locacaoDTO.email());
-        locacao.setTelefone(locacaoDTO.telefone());
-        locacao.setDataLocacao(new Date());
-        locacao.setDataDevolucao(locacaoDTO.dataDevolucao());
-        locacao.setExemplares(exemplares);
 
         String qrCode = qrCodeService.gerarQrCode(locacao);
         locacao.setQrCode(qrCode);
@@ -103,6 +108,7 @@ public class LocacaoService {
             exemplar.setAtivo(true);
         });
 
+        
         locacao.getExemplares().removeAll(exemplaresDevolvidos);
 
         if (locacao.getExemplares().isEmpty()) {

@@ -23,7 +23,7 @@ public class FilmeService {
 				.collect(Collectors.toList());
 	}
 	
-    public List<FilmeDTO> listarTodos() {
+    public List<FilmeDTO> listarTodos() { 
         List<Filme> filmes = filmeRepository.findAll();
         return filmes.stream()
                      .map(filme -> FilmeDTO.configuraFilme(filme))

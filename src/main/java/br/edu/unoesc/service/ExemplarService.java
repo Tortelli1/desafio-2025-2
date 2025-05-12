@@ -75,7 +75,10 @@ public class ExemplarService {
         }
 
         exemplarRepository.deleteById(id);
-        filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+        if(exemplar.getAtivo()) {
+        	filmeService.atualizarExemplares(exemplar.getFilme(), -1);
+        }
+      
     }
 
 
