@@ -36,7 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="locacao : ${locacoes}">
+                <tr th:each="locacao : ${pendentes}">
                     <td th:text="${locacao.nome}"></td>
                     <td th:text="${locacao.cpf}"></td>
                     <td th:text="${locacao.email}"></td>
@@ -44,12 +44,35 @@
                     <td th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></td>
 					<td class="acao">
 					    <a th:href="@{/locacoes/editar/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
-						<a th:href="@{/locacoes/devolver/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Devolver</a>
+						<a th:if="${locacao.dataDevolvido == null}" th:href="@{/locacoes/devolver/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Devolver</a>
 						<button class="btn btn-sm btn-danger btn-excluir me-1" th:attr="data-id=${locacao.id}">Excluir</button>
 					</td>
                 </tr>
             </tbody>
         </table>
+		
+		<h2>Locações Devolvidas</h2>
+		<table class="table">
+		    <thead>
+		        <tr>
+		            <th>Nome</th>
+		            <th>CPF</th>
+		            <th>Email</th>
+		            <th>Telefone</th>
+		            <th>Data Devolvido</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr th:each="locacao : ${devolvidos}">
+		            <td th:text="${locacao.nome}"></td>
+		            <td th:text="${locacao.cpf}"></td>
+		            <td th:text="${locacao.email}"></td>
+		            <td th:text="${locacao.telefone}"></td>
+		            <td th:text="${#dates.format(locacao.dataDevolvido, 'dd/MM/yyyy')}"></td>
+		        </tr>
+		    </tbody>
+		</table>
+		
     </div>
 
     <script src="/js/consultar/consultarLocacao.js"></script>

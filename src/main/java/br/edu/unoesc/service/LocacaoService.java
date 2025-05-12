@@ -26,7 +26,15 @@ public class LocacaoService {
     @Autowired
     private QRCodeService qrCodeService;
 
-    public List<Locacao> listarLocacoesPendentes() {
+    public List<Locacao> listarTodos() {
+    	return locacaoRepository.findAll();
+    }
+    
+    public List<Locacao> listarDevolvidos() {
+    	return locacaoRepository.findByDataDevolvidoIsNotNull();
+    }
+    
+    public List<Locacao> listarPendentes() {
         return locacaoRepository.findByDataDevolvidoIsNull();
     }
 
@@ -82,20 +90,25 @@ public class LocacaoService {
         
         locacaoRepository.save(locacao);
     }
-    
+ 
     public void processarDevolucao(Integer locacaoId, List<Integer> exemplarIds) {
         Locacao locacao = locacaoRepository.findById(locacaoId)
                 .orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
-        
+
         List<Exemplar> exemplaresDevolvidos = exemplarService.buscarPorId(exemplarIds);
-        
+
         exemplaresDevolvidos.forEach(exemplar -> {
             Filme filme = exemplar.getFilme();
             filmeService.atualizarExemplares(filme, 1);
             exemplar.setAtivo(true);
         });
-        
+
         locacao.getExemplares().removeAll(exemplaresDevolvidos);
+
+        if (locacao.getExemplares().isEmpty()) {
+            locacao.setDataDevolvido(new Date());
+            locacao.setQrCode(null);
+        }
 
         locacaoRepository.save(locacao);
     }
@@ -113,7 +126,14 @@ public class LocacaoService {
         return null;
     }
 
-    public void excluirLocacao(Integer id) {
-        locacaoRepository.deleteById(id);
-    }
+	public void excluirLocacao(Integer id) {
+		Locacao locacao = locacaoRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
+
+		if (locacao.getDataDevolvido() == null) {
+			throw new IllegalStateException("Não é possível excluir uma locação com filmes ainda não devolvidos.");
+		}
+
+		locacaoRepository.deleteById(id);
+	}
 }

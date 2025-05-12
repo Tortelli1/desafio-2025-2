@@ -32,7 +32,8 @@ public class LocacaoController {
 
     @GetMapping("/consultar")
     public String consultarLocacoes(Model model) {
-        model.addAttribute("locacoes", locacaoService.listarLocacoesPendentes());
+        model.addAttribute("pendentes", locacaoService.listarPendentes());
+        model.addAttribute("devolvidos", locacaoService.listarDevolvidos());
         return "paginas/consulta/consultarLocacao";
     }
 
