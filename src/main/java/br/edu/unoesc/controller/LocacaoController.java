@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.unoesc.DTO.LocacaoDTO;
+import br.edu.unoesc.model.Locacao;
 import br.edu.unoesc.service.ExemplarService;
 import br.edu.unoesc.service.LocacaoService;
 
@@ -83,7 +84,9 @@ public class LocacaoController {
     }
     
     @PostMapping("/devolver")
-    public String confirmarDevolucao(@RequestParam List<Integer> exemplarIds, @RequestParam Integer locacaoId, RedirectAttributes attr) {
+    public String confirmarDevolucao(@RequestParam List<Integer> exemplarIds,
+                                     @RequestParam Integer locacaoId,
+                                     RedirectAttributes attr) {
         try {
             locacaoService.processarDevolucao(locacaoId, exemplarIds);
             attr.addFlashAttribute("success", "Devolução realizada com sucesso!");
@@ -91,6 +94,20 @@ public class LocacaoController {
         } catch (Exception e) {
             attr.addFlashAttribute("error", "Erro ao realizar devolução: " + e.getMessage());
             return "redirect:/locacoes/devolver/" + locacaoId;
+        }
+    }
+    
+    @GetMapping("/devolver/{id}")
+    public String devolverLocacao(@PathVariable Integer id, Model model) {
+        try {
+            Locacao locacao = locacaoService.buscarPorId(id);
+            model.addAttribute("locacoes", List.of(locacao));
+            model.addAttribute("exemplares", locacao.getExemplares());
+            
+            return "/paginas/devolverLocacao";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/locacoes/consultar";
         }
     }
     

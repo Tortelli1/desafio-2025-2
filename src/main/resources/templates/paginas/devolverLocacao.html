@@ -16,7 +16,7 @@
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-        <form th:action="@{/locacoes/devolucao}" method="post">
+        <form th:action="@{/locacoes/devolver}" method="post">
             <div class="form-group">
                 <label for="locacao">Selecione a Locação:</label>
                 <select id="locacao" name="locacaoId" class="form-control" required>
@@ -27,7 +27,7 @@
             <div class="form-group">
                 <label for="exemplares">Exemplares Devolvidos:</label>
                 <select id="exemplares" name="exemplarIds" class="form-control" multiple required>
-                    <option th:each="exemplar : ${exemplares}" th:value="${exemplar.id}" th:text="${exemplar.filmeTitulo}"></option>
+                    <option th:each="exemplar : ${exemplares}" th:value="${exemplar.id}" th:text="${exemplar.filme.titulo}"></option>
                 </select>
             </div>
 
@@ -37,6 +37,5 @@
         </form>
     </div>
 
-    <script src="/js/devolucao/devolucaoLocacao.js"></script>
 </body>
 </html>

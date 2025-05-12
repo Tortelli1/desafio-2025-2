@@ -100,6 +100,11 @@ public class LocacaoService {
         locacaoRepository.save(locacao);
     }
     
+    public Locacao buscarPorId(Integer id) {
+        return locacaoRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
+    }
+    
     public LocacaoDTO buscarDtoPorId(Integer id) {
         Locacao locacao = locacaoRepository.findById(id).orElse(null);
         if (locacao != null) {

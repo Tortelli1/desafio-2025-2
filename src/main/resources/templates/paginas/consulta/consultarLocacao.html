@@ -16,11 +16,13 @@
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-        <form th:action="@{/locacoes/consultar}" method="get" class="form-filtro">
-            <input type="text" name="cpf" placeholder="CPF" th:value="${cpf}">
-            <input type="text" name="nome" placeholder="Nome" th:value="${nome}">
-            <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
-        </form>
+		<form th:action="@{/locacoes/consultar}" method="get" class="form-filtro">
+		    <input type="text" name="cpf" placeholder="CPF" th:value="${cpf}">
+		    <input type="text" name="nome" placeholder="Nome" th:value="${nome}">
+		    <input type="text" name="email" placeholder="Email" th:value="${email}">
+		    <input type="text" name="filme" placeholder="Filme" th:value="${filme}">
+		    <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
+		</form>
 
         <table class="table">
             <thead>
@@ -30,7 +32,6 @@
                     <th>Email</th>
                     <th>Data Locação</th>
                     <th>Data Devolução</th>
-                    <th>QR Code</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -41,13 +42,11 @@
                     <td th:text="${locacao.email}"></td>
                     <td th:text="${#dates.format(locacao.dataLocacao, 'dd/MM/yyyy')}"></td>
                     <td th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></td>
-                    <td>
-                        <a th:href="@{'/locacoes/qr/' + ${locacao.id}}" target="_blank">Ver QR Code</a>
-                    </td>
-                    <td class="acao">
-                        <a th:href="@{/locacoes/editar/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
-                        <button class="btn btn-sm btn-danger btn-excluir" th:attr="data-id=${locacao.id}">Excluir</button>
-                    </td>
+					<td class="acao">
+					    <a th:href="@{/locacoes/editar/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
+						<a th:href="@{/locacoes/devolver/{id}(id=${locacao.id})}" class="btn btn-sm btn-primary me-1">Devolver</a>
+						<button class="btn btn-sm btn-danger btn-excluir me-1" th:attr="data-id=${locacao.id}">Excluir</button>
+					</td>
                 </tr>
             </tbody>
         </table>
