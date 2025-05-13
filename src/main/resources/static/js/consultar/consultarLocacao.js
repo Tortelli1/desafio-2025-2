@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function aplicarMascaraCPF(valor) {
 		return valor
-			.replace(/\D/g, '') // remove tudo que não é número
+			.replace(/\D/g, '')
 			.replace(/(\d{3})(\d)/, '$1.$2')
 			.replace(/(\d{3})(\d)/, '$1.$2')
 			.replace(/(\d{3})(\d{1,2})$/, '$1-$2');

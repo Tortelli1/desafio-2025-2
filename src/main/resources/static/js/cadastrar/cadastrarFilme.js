@@ -47,4 +47,26 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('lancamento').value = lancamentoFormatado;
     }
 
+	const form = document.getElementById('filmeForm');
+	    const ativo = document.getElementById('ativo');
+
+	    form.addEventListener('submit', function (e) {
+	        const tituloBusca = buscaTituloInput.value.trim();
+	        const ativoSelecionado = ativo.value;
+
+	        if (!tituloBusca) {
+	            alert('Por favor, preencha o campo "Buscar Filme".');
+	            buscaTituloInput.focus();
+	            e.preventDefault();
+	            return;
+	        }
+
+	        if (ativoSelecionado === '') {
+	            alert('Por favor, selecione se o filme está ativo.');
+	            ativo.focus();
+	            e.preventDefault();
+	            return;
+	        }
+	    });
+	
 });
