@@ -80,7 +80,6 @@ public class FilmeController {
 	        filmeService.deletarFilme(id);
 	        return ResponseEntity.ok("Filme excluído com sucesso");
 	    } catch (Exception e) {
-	    	// stack trace somente para debug, remover
 	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o filme");
 	    }
@@ -104,7 +103,6 @@ public class FilmeController {
 	        FilmeDTO filme = tmdbService.buscarFilmePorId(id);
 	        return ResponseEntity.ok(filme);
 	    } catch (Exception e) {
-	    	// nao devolver as mensagens de erro diretamente, dizer somente que ocooreu um erro ao deletar
 	        return ResponseEntity.badRequest().body(null);
 	    }
 	}
