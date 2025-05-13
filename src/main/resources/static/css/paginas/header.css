@@ -1,16 +1,17 @@
 @import url("fonteDeCores.css");
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
 
-
 header {
     background-color: var(--azul-escuro);
     color: var(--branco);
     padding-top: 15px;
     height: 6vh;
+    position: relative;
 }
 
 nav ul {
@@ -68,4 +69,28 @@ nav ul li a:hover {
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+.logout-form {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    margin: 0;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
 }
