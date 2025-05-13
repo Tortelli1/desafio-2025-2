@@ -31,11 +31,30 @@ public class LocacaoController {
     private ExemplarService exemplarService;
 
     @GetMapping("/consultar")
-    public String consultarLocacoes(Model model) {
+    public String consultarLocacoes(
+            @RequestParam(value = "cpf", required = false) String cpf,
+            @RequestParam(value = "nome", required = false) String nome,
+            @RequestParam(value = "email", required = false) String email,
+            Model model) {
 
-    	model.addAttribute("pendentes", locacaoService.listarPendentes());
-        model.addAttribute("devolvidos", locacaoService.listarDevolvidos());
-        
+        List<Locacao> pendentes;
+        List<Locacao> devolvidos;
+
+        boolean filtroAtivo = (cpf != null && !cpf.isBlank()) ||
+                              (nome != null && !nome.isBlank()) ||
+                              (email != null && !email.isBlank());
+
+        if (filtroAtivo) {
+            pendentes = locacaoService.buscarPendentesFiltrados(cpf, nome, email);
+            devolvidos = locacaoService.buscarDevolvidosFiltrados(cpf, nome, email);
+        } else {
+            pendentes = locacaoService.listarPendentes();
+            devolvidos = locacaoService.listarDevolvidos();
+        }
+
+        model.addAttribute("pendentes", pendentes);
+        model.addAttribute("devolvidos", devolvidos);
+
         return "paginas/consulta/consultarLocacao";
     }
 

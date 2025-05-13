@@ -16,12 +16,17 @@
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-		<form th:action="@{/locacoes/consultar}" method="get" class="form-filtro">
-		    <input type="text" name="cpf" placeholder="CPF" th:value="${cpf}">
-		    <input type="text" name="nome" placeholder="Nome" th:value="${nome}">
-		    <input type="text" name="email" placeholder="Email" th:value="${email}">
-		    <input type="text" name="filme" placeholder="Filme" th:value="${filme}">
-		    <button type="submit" class="btn btn-sm btn-primary">Filtrar</button>
+		<form id="form-filtro" class="form-filtro">
+		  <div class="mb-3">
+		    <select id="filtro" class="form-select">
+		      <option value="" disabled selected>Selecione um filtro</option>
+		      <option value="nome">Nome</option>
+		      <option value="cpf">CPF</option>
+		      <option value="email">Email</option>
+		    </select>
+		    <input id="valorFiltro" class="form-control mt-2" type="text" placeholder="Digite o valor" disabled />
+		    <button id="btnEnviar" class="btn btn-sm btn-primary me-1" type="submit">Filtrar</button>
+		  </div>
 		</form>
 
         <table class="table">

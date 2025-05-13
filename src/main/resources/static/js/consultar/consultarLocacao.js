@@ -32,4 +32,42 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = `/locacoes/editar/${locacaoId}`;
         });
     });
+
+	const selectFiltro = document.getElementById('filtro');
+	const inputValor = document.getElementById('valorFiltro');
+	const formFiltro = document.getElementById('form-filtro');
+
+	function aplicarMascaraCPF(valor) {
+		return valor
+			.replace(/\D/g, '') // remove tudo que não é número
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d)/, '$1.$2')
+			.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+	}
+
+	selectFiltro.addEventListener('change', () => {
+		inputValor.disabled = false;
+		inputValor.value = '';
+		inputValor.placeholder = `Digite o ${selectFiltro.options[selectFiltro.selectedIndex].text.toLowerCase()}...`;
+	});
+
+	inputValor.addEventListener('input', () => {
+		if (selectFiltro.value === 'cpf') {
+			inputValor.value = aplicarMascaraCPF(inputValor.value);
+		}
+	});
+
+	formFiltro.addEventListener('submit', (e) => {
+		e.preventDefault();
+		const campo = selectFiltro.value;
+		const valor = inputValor.value.trim();
+
+		if (!campo || !valor) {
+			alert('Selecione um filtro e informe um valor.');
+			return;
+		}
+
+		const url = `/locacoes/consultar?${campo}=${encodeURIComponent(valor)}`;
+		window.location.href = url;
+	});
 });

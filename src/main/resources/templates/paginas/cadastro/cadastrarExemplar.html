@@ -16,7 +16,7 @@
         <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
         <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
 
-        <form th:action="@{/exemplar/salvar}" th:object="${exemplarDTO}" method="post">
+        <form th:action="@{${exemplarDTO.id == null} ? '/exemplar/salvar' : '/exemplar/editar'}"  th:object="${exemplarDTO}" method="post">
             <input type="hidden" th:field="*{id}" />
 			
 			<div class="form-group">
