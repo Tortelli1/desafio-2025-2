@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;800&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(239deg, #3B9D5C 0%, #1F477A 100%);
+    font-family: "Open Sans", sans-serif;
+}
+
+.container {
+    width: 26em;
+    height: 22em;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.form-group input{
+    border-color: #000000;
+}
+
+.form-control {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+
+.btn-primary {
+    background-color: #134c7f;
+    border: none;
+    color: white;
+    padding: 15px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+}
+
+.btn-primary:hover {
+	
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	background-color: #46b553;
+    background-color: #46b553;
+}
+
+.mensagem {
+    color: #B22222;
+    margin-bottom: 1em;
+    border: 1px, solid, #FF0000;
+    border-radius: 5px;
+    background-color: #FFA07A;
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}

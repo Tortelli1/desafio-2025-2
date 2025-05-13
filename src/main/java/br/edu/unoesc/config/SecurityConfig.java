@@ -25,14 +25,14 @@ public class SecurityConfig {
 			.authorizeHttpRequests(requests -> requests
                         .requestMatchers(
                         		"/", 
-                        		"/css/paginas/login.css", 
-                        		"/css/",
-                        		"/consultaPublica/consultarLocacao").permitAll()
+                        		"/css/**", 
+                        		"/consultaPublica/**",
+                        		"/paginas/header.html").permitAll()
                         .anyRequest().authenticated())
 			
 			.formLogin(login -> login
                                 .loginPage("/login")
-                                .defaultSuccessUrl("/home", true)
+                                .defaultSuccessUrl("/", true)
                                 .permitAll())
 			.logout(logout -> logout
 					.logoutUrl("/logout")
