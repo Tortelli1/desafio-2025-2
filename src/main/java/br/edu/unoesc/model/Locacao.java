@@ -14,22 +14,22 @@ public class Locacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(name = "NOME")
+	@Column(name = "NOME", nullable = false)
 	private String nome;
 	
-	@Column(name = "CPF")
+	@Column(name = "CPF", nullable = false)
 	private String cpf;
 	
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", nullable = false)
 	private String email;
 	
-	@Column(name = "TELEFONE")
+	@Column(name = "TELEFONE", nullable = false)
 	private String telefone;
 	
 	@Column(name= "DATA_ALOCACAO")
 	private Date dataLocacao;
 	
-	@Column(name = "DATA_DEVOLUCAO")
+	@Column(name = "DATA_DEVOLUCAO", nullable = false)
 	private Date dataDevolucao;
 	
 	@Column(name = "DATA_DEVOLVIDO")

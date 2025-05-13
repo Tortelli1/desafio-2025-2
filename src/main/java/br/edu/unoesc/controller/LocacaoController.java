@@ -66,7 +66,10 @@ public class LocacaoController {
     }
 
     @PostMapping("/salvar")
-    public String salvarLocacao(@ModelAttribute LocacaoDTO locacaoDTO, @RequestParam List<Integer> exemplarIds, RedirectAttributes attr) {
+    public String salvarLocacao(
+    		@ModelAttribute LocacaoDTO locacaoDTO, 
+    		@RequestParam List<Integer> exemplarIds, 
+    		RedirectAttributes attr) {
         try {
             locacaoService.adicionarLocacao(locacaoDTO, exemplarIds);
             attr.addFlashAttribute("success", "Locação realizada com sucesso!");
@@ -92,9 +95,10 @@ public class LocacaoController {
     }
     
     @PostMapping("/atualizar")
-    public String atualizarLocacao(@ModelAttribute LocacaoDTO locacaoDTO,
-                                   @RequestParam("exemplarIds") List<Integer> exemplarIds,
-                                   RedirectAttributes attr) {
+    public String atualizarLocacao(
+    		@ModelAttribute LocacaoDTO locacaoDTO,
+    		@RequestParam("exemplarIds") List<Integer> exemplarIds,
+            RedirectAttributes attr) {
         try {
             locacaoService.atualizarLocacao(locacaoDTO, exemplarIds);
             attr.addFlashAttribute("success", "Locação atualizada com sucesso!");
@@ -106,9 +110,10 @@ public class LocacaoController {
     }
     
     @PostMapping("/devolver")
-    public String confirmarDevolucao(@RequestParam List<Integer> exemplarIds,
-                                     @RequestParam Integer locacaoId,
-                                     RedirectAttributes attr) {
+    public String confirmarDevolucao(
+    		@RequestParam List<Integer> exemplarIds,
+            @RequestParam Integer locacaoId,
+            RedirectAttributes attr) {
         try {
             locacaoService.processarDevolucao(locacaoId, exemplarIds);
             attr.addFlashAttribute("success", "Devolução realizada com sucesso!");
@@ -120,7 +125,9 @@ public class LocacaoController {
     }
     
     @GetMapping("/devolver/{id}")
-    public String devolverLocacao(@PathVariable Integer id, Model model) {
+    public String devolverLocacao(
+    		@PathVariable Integer id, 
+    		Model model) {
         try {
             Locacao locacao = locacaoService.buscarPorId(id);
             model.addAttribute("locacoes", List.of(locacao));

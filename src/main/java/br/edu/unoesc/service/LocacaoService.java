@@ -75,7 +75,8 @@ public class LocacaoService {
         });
         
         Locacao locacao = locacaoDTO.constroiLocacao(exemplares);
-
+        locacao.setDataLocacao(new Date());
+        
         String qrCode = qrCodeService.gerarQrCode(locacao);
         locacao.setQrCode(qrCode);
 
