@@ -16,17 +16,17 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Integer> {
 
     List<Locacao> findByCpf(String cpf);
      
-    List<Locacao> findByCpfAndDataDevolvidoIsNotNull(String cpf);
+    List<Locacao> findByCpfContainingIgnoreCaseAndDataDevolvidoIsNotNull(String cpf);
     
-    List<Locacao> findByCpfAndDataDevolvidoIsNull(String cpf);
+    List<Locacao> findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(String cpf);
     
-    List<Locacao> findByNomeAndDataDevolvidoIsNotNull(String nome);
+    List<Locacao> findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(String nome);
     
-    List<Locacao> findByNomeAndDataDevolvidoIsNull(String nome);
+    List<Locacao> findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(String nome);
     
-    List<Locacao> findByEmailAndDataDevolvidoIsNotNull(String email);
+    List<Locacao> findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(String email);
     
-    List<Locacao> findByEmailAndDataDevolvidoIsNull(String email);
+    List<Locacao> findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(String email);
     
     List<Locacao> findByDataDevolvidoIsNull();
 
