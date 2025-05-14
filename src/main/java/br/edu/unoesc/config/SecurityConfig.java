@@ -24,7 +24,6 @@ public class SecurityConfig {
 			
 			.authorizeHttpRequests(requests -> requests
                         .requestMatchers(
-                        		"/", 
                         		"/css/**",
                         		"/js/**",
                         		"/consultaPublica/**",
