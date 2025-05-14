@@ -17,7 +17,7 @@
             <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
             <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
 			
-			<div class="form-group" style="position: relative;">
+			<div class="form-group" style="position: relative;" th:if="${filmeDTO != null and filmeDTO.id == null}">
 			    <label for="buscaTitulo">Buscar Filme</label>
 			    <input type="text" class="form-control" id="buscaTitulo" placeholder="Digite o título do filme..." />
 			    <div id="sugestoes" class="list-group"></div>
