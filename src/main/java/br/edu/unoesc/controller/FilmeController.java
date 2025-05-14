@@ -83,7 +83,6 @@ public class FilmeController {
 	    } catch (ExcecaoPersonalizada e) {
 	    	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 	    } catch (Exception e) {
-	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o filme");
 	    }
 	}

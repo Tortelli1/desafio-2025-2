@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.DTO.ExemplarDTO;
+import br.edu.unoesc.excecoes.ExcecaoPersonalizada;
 import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.repository.ExemplarRepository;
@@ -74,7 +75,7 @@ public class ExemplarService {
             .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
         if (!exemplar.getAtivo()) {
-            throw new RuntimeException("Exemplar inativo não pode ser excluído.");
+            throw new ExcecaoPersonalizada("Exemplar inativo não pode ser excluído.");
         }
 
         boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);

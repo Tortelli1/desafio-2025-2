@@ -9,17 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(`/exemplar/deletar/${exemplarId}`, {
                     method: 'DELETE'
                 })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Exemplar excluído com sucesso!');
-                        location.reload();
-                    } else {
-                        alert('Erro ao excluir o exemplar.');
-                    }
-                })
-                .catch(() => {
-                    alert('Erro na comunicação com o servidor.');
-                });
+				.then(response => response.text().then(msg => {
+					if (response.redirected) {
+						window.location.href = response.url;
+					} else if (response.ok) {
+						alert(msg);
+						location.reload();
+					} else {
+						alert(msg);
+					}
+				}))
+				.catch(() => {
+					alert('Erro na comunicação com o servidor.');
+				});
             }
         });
     });
