@@ -69,6 +69,9 @@ public class ExemplarController {
             exemplarService.inativarExemplar(exemplarDTO);
             attr.addFlashAttribute("success", "Exemplar inativado com sucesso!");
             return "redirect:/exemplar/consultar";
+        } catch (ExcecaoPersonalizada e) {
+            attr.addFlashAttribute("error", e.getMessage());
+            return "redirect:/exemplar/editar/" + exemplarDTO.id();
         } catch (Exception e) {
             attr.addFlashAttribute("error", "Erro ao inativar exemplar!");
             return "redirect:/exemplar/editar/" + exemplarDTO.id();

@@ -53,7 +53,7 @@ public class ExemplarService {
 	            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
 	    if (exemplar.getAtivo() && locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(exemplar.getId())) {
-	        throw new RuntimeException("Não é possível inativar o exemplar. Ele está atualmente alugado.");
+	        throw new ExcecaoPersonalizada("Não é possível inativar o exemplar. Ele está atualmente alugado.");
 	    }
 	    
 	    if (exemplar.getAtivo()) {
