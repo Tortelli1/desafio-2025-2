@@ -37,6 +37,7 @@ nav ul li a {
 
 nav ul li a:hover {
     background-color: var(--fundo-botao);
+	border-radius: 5px;
 }
 
 .dropdown-menu {
@@ -65,6 +66,7 @@ nav ul li a:hover {
 
 .dropdown-menu li a:hover {
     background-color: var(--fundo-botao);
+	border-radius: 5px;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -80,7 +82,7 @@ nav ul li a:hover {
 }
 
 .logout-button {
-    background-color: #e74c3c;
+    background-color: var(--azul-escuro);
     color: white;
     border: none;
     padding: 8px 16px;
@@ -92,5 +94,5 @@ nav ul li a:hover {
 }
 
 .logout-button:hover {
-    background-color: #c0392b;
+    background-color: var(--vermelho-logout);
 }

@@ -10,9 +10,9 @@
 <body>
     <header th:insert="~{/paginas/header :: header}"></header>
 
-    <div class="container mt-5 d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container" style="height: 100vh;">
+		<h2 th:text="${filmeDTO != null and filmeDTO.id == null} ? 'Cadastrar Filme' : 'Editar Filme'"></h2>
         <div class="w-100" style="max-width: 600px;">
-            <h2 class="text-center">Cadastrar Filme</h2>
         
             <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
             <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
