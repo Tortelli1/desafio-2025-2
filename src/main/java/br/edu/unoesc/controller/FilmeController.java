@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.unoesc.DTO.FilmeDTO;
+import br.edu.unoesc.excecoes.ExcecaoPersonalizada;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.service.FilmeService;
 import br.edu.unoesc.service.TmdbService;
@@ -79,6 +80,8 @@ public class FilmeController {
 	    try {
 	        filmeService.deletarFilme(id);
 	        return ResponseEntity.ok("Filme excluído com sucesso");
+	    } catch (ExcecaoPersonalizada e) {
+	    	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o filme");

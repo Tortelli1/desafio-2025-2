@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.DTO.FilmeDTO;
+import br.edu.unoesc.excecoes.ExcecaoPersonalizada;
+import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Filme;
+import br.edu.unoesc.repository.ExemplarRepository;
 import br.edu.unoesc.repository.FilmeRepository;
 
 @Service
@@ -15,6 +18,9 @@ public class FilmeService {
 
 	@Autowired
     private FilmeRepository filmeRepository;
+	
+	@Autowired
+	private ExemplarRepository exemplarRepository;
 
 	public List<FilmeDTO> listarFilmesAtivos() {
 		return filmeRepository.findByAtivoTrue()
@@ -51,12 +57,15 @@ public class FilmeService {
         filmeRepository.save(filme);
     }
     
-    public void deletarFilme(Integer id) {
-        if (filmeRepository.existsById(id)) {
-            filmeRepository.deleteById(id); 
-        } else {
-            throw new RuntimeException("Filme não encontrado!");
+	public void deletarFilme(Integer id) {
+        if (!filmeRepository.existsById(id)) {
+        	throw new RuntimeException("Filme não encontrado!");
         }
+            
+		List<Exemplar> exemplares = exemplarRepository.findByFilmeId(id);
+		if (!exemplares.isEmpty()) {
+			throw new ExcecaoPersonalizada("Não é possível excluir o filme. Existem exemplares associados a ele.");
+		}
     }
 
     public FilmeDTO buscarDtoPorId(Integer id) {

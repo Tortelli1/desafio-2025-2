@@ -9,18 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(`/filmes/deletar/${filmeId}`, {
                     method: 'DELETE'
                 })
-                .then(response => {
-                    if (response.redirected) {
-                        window.location.href = response.url;
-                    } else if (response.ok) {
-                        location.reload();
-                    } else {
-                        alert('Erro ao excluir o filme.');
-                    }
-                })
-                .catch(() => {
-                    alert('Erro na comunicação com o servidor.');
-                });
+				.then(response => response.text().then(msg => {
+				    if (response.redirected) {
+				        window.location.href = response.url;
+				    } else if (response.ok) {
+				        alert(msg);
+				        location.reload();
+				    } else {
+				        alert(msg);
+				    }
+				}))
+				.catch(() => {
+				    alert('Erro na comunicação com o servidor.');
+				});
             }
         });
     });
