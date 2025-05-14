@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.unoesc.DTO.LocacaoDTO;
+import br.edu.unoesc.excecoes.ExcecaoPersonalizada;
 import br.edu.unoesc.model.Exemplar;
 import br.edu.unoesc.model.Filme;
 import br.edu.unoesc.model.Locacao;
@@ -150,7 +151,7 @@ public class LocacaoService {
 				.orElseThrow(() -> new IllegalArgumentException("Locação não encontrada"));
 
 		if (locacao.getDataDevolvido() == null) {
-			throw new IllegalStateException("Não é possível excluir uma locação com filmes ainda não devolvidos.");
+			throw new ExcecaoPersonalizada("Não é possível excluir uma locação com filmes ainda não devolvidos.");
 		}
 
 		locacaoRepository.deleteById(id);

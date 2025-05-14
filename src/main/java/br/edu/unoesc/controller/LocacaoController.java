@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.edu.unoesc.DTO.LocacaoDTO;
+import br.edu.unoesc.excecoes.ExcecaoPersonalizada;
 import br.edu.unoesc.model.Locacao;
 import br.edu.unoesc.service.ExemplarService;
 import br.edu.unoesc.service.LocacaoService;
@@ -145,8 +146,10 @@ public class LocacaoController {
         try {
             locacaoService.excluirLocacao(id);
             return ResponseEntity.ok("Locação excluída com sucesso!");
+        } catch (ExcecaoPersonalizada e) {
+        	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não foi possível excluir a locação!");
         }
     }
     
