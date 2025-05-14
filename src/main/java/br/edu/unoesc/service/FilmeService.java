@@ -66,6 +66,7 @@ public class FilmeService {
 		if (!exemplares.isEmpty()) {
 			throw new ExcecaoPersonalizada("Não é possível excluir o filme. Existem exemplares associados a ele.");
 		}
+		filmeRepository.deleteById(id);
     }
 
     public FilmeDTO buscarDtoPorId(Integer id) {
