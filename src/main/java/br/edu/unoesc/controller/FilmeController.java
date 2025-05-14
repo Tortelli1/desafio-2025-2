@@ -32,7 +32,7 @@ public class FilmeController {
 	
 	@GetMapping("/consultar")
 	public String listarFilmes(FilmeDTO filmeDTO, Model model) {
-		model.addAttribute("filmeDTO", filmeService.listarFilmesAtivos());
+		model.addAttribute("filmeDTO", filmeService.listarTodos());
 		return "paginas/consulta/consultarFilme";
 		
 	}

@@ -54,7 +54,7 @@ public class ExemplarController {
             exemplarService.adicionarExemplar(exemplarDTO);
             model.addAttribute("success", "Exemplar cadastrado com sucesso!");
         } catch (Exception e) {
-            model.addAttribute("error", "Erro ao cadastrar exemplar: " + e.getMessage());
+            model.addAttribute("error", "Erro ao cadastrar exemplar!");
             return "paginas/cadastro/cadastrarExemplar";
         }
 
@@ -68,7 +68,7 @@ public class ExemplarController {
             attr.addFlashAttribute("success", "Exemplar inativado com sucesso!");
             return "redirect:/exemplar/consultar";
         } catch (Exception e) {
-            attr.addFlashAttribute("error", "Erro ao inativar exemplar: " + e.getMessage());
+            attr.addFlashAttribute("error", "Erro ao inativar exemplar!");
             return "redirect:/exemplar/editar/" + exemplarDTO.id();
         }
     }

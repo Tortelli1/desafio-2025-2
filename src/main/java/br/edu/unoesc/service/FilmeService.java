@@ -50,7 +50,6 @@ public class FilmeService {
         filme.setExemplaresDisponiveis(filme.getExemplaresDisponiveis() + quantidade);
         filmeRepository.save(filme);
     }
-
     
     public void deletarFilme(Integer id) {
         if (filmeRepository.existsById(id)) {

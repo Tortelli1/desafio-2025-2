@@ -51,13 +51,21 @@ public class ExemplarService {
 	    Exemplar exemplar = exemplarRepository.findById(exemplarDTO.id())
 	            .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
 
+	    if (exemplar.getAtivo() && locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(exemplar.getId())) {
+	        throw new RuntimeException("Não é possível inativar o exemplar. Ele está atualmente alugado.");
+	    }
+	    
 	    if (exemplar.getAtivo()) {
 	        Filme filme = exemplar.getFilme();
 	        filmeService.atualizarExemplares(filme, -1);
 	        exemplar.setAtivo(false);
 	        exemplarRepository.save(exemplar);
+	    } else {
+	    	Filme filme = exemplar.getFilme();
+	    	exemplar.setAtivo(true);
+	    	filmeService.atualizarExemplares(filme, 1);
+	    	exemplarRepository.save(exemplar);
 	    }
-
 	    return new ExemplarDTO(exemplar);
 	}
 	
