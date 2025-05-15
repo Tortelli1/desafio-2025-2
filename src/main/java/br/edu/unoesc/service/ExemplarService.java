@@ -35,7 +35,7 @@ public class ExemplarService {
 	public ExemplarDTO adicionarExemplar(ExemplarDTO exemplarDTO) {
 		Filme filme = filmeService.buscarPorId(exemplarDTO.filmeId());
 
-		if (!Boolean.TRUE.equals(filme.getAtivo())) {
+		if (!filme.getAtivo()) {
 			throw new RuntimeException("Filme inativo.");
 		}
 

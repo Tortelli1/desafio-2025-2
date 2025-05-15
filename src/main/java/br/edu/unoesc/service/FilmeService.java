@@ -47,7 +47,6 @@ public class FilmeService {
     
     public void atualizarFilme(FilmeDTO dto) {
         Filme existente = filmeRepository.findById(dto.id()).orElseThrow();
-        existente.setResumo(dto.resumo());
         existente.setAtivo(dto.ativo());
         filmeRepository.save(existente);
     }

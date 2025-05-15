@@ -38,8 +38,8 @@ public class LocacaoController {
             @RequestParam(value = "email", required = false) String email,
             Model model) {
 
-        List<Locacao> pendentes;
-        List<Locacao> devolvidos;
+        List<LocacaoDTO> pendentes;
+        List<LocacaoDTO> devolvidos;
 
         boolean filtroAtivo = (cpf != null && !cpf.isBlank()) ||
                               (nome != null && !nome.isBlank()) ||
@@ -76,7 +76,7 @@ public class LocacaoController {
             attr.addFlashAttribute("success", "Locação realizada com sucesso!");
             return "redirect:/locacoes/consultar";
         } catch (Exception e) {
-            attr.addFlashAttribute("error", "Erro ao realizar locação!");
+            attr.addFlashAttribute("error", "Erro ao realizar locação: " + e.getMessage());
             return "redirect:/locacoes/cadastrar";
         }
     }

@@ -31,41 +31,85 @@ public class LocacaoService {
     	return locacaoRepository.findAll();
     }
     
-    public List<Locacao> listarDevolvidos() {
-    	return locacaoRepository.findByDataDevolvidoIsNotNull();
+    public List<LocacaoDTO> listarDevolvidos() {
+        return locacaoRepository.findByDataDevolvidoIsNotNull()
+                .stream()
+                .map(LocacaoDTO::new)
+                .toList();
     }
     
-    public List<Locacao> listarPendentes() {
-        return locacaoRepository.findByDataDevolvidoIsNull();
+    public List<LocacaoDTO> listarPendentes() {
+        return locacaoRepository.findByDataDevolvidoIsNull()
+                .stream()
+                .map(LocacaoDTO::new)
+                .toList();
     }
 
-    public List<Locacao> buscarLocacoesPendentesPorCpf(String cpf) {
-        return locacaoRepository.findByCpf(cpf);
+    public List<LocacaoDTO> buscarLocacoesPendentesPorCpf(String cpf) {
+        return locacaoRepository.findByCpf(cpf)
+                .stream()
+                .map(LocacaoDTO::new)
+                .toList();
+    }
+    public List<LocacaoDTO> buscarPendentesFiltrados(String cpf, String nome, String email) {
+        List<Locacao> locacoes;
+
+        if (cpf != null && !cpf.isBlank()) {
+            locacoes = locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(cpf);
+        } else if (nome != null && !nome.isBlank()) {
+            locacoes = locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(nome);
+        } else if (email != null && !email.isBlank()) {
+            locacoes = locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(email);
+        } else {
+            locacoes = locacaoRepository.findByDataDevolvidoIsNull();
+        }
+
+        return locacoes.stream()
+                .map(LocacaoDTO::new)
+                .toList();
+    }
+
+    public List<LocacaoDTO> buscarDevolvidosFiltrados(String cpf, String nome, String email) {
+        List<Locacao> locacoes;
+
+        if (cpf != null && !cpf.isBlank()) {
+            locacoes = locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNotNull(cpf);
+        } else if (nome != null && !nome.isBlank()) {
+            locacoes = locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(nome);
+        } else if (email != null && !email.isBlank()) {
+            locacoes = locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(email);
+        } else {
+            locacoes = locacaoRepository.findByDataDevolvidoIsNotNull();
+        }
+
+        return locacoes.stream()
+                .map(LocacaoDTO::new)
+                .toList();
     }
     
-    public List<Locacao> buscarPendentesFiltrados(String cpf, String nome, String email) {
-        if (cpf != null && !cpf.isBlank()) {
-            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(cpf);
-        } else if (nome != null && !nome.isBlank()) {
-            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(nome);
-        } else if (email != null && !email.isBlank()) {
-            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(email);
-        } else {
-            return locacaoRepository.findByDataDevolvidoIsNull();
-        }
-    }
-
-    public List<Locacao> buscarDevolvidosFiltrados(String cpf, String nome, String email) {
-        if (cpf != null && !cpf.isBlank()) {
-            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNotNull(cpf);
-        } else if (nome != null && !nome.isBlank()) {
-            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(nome);
-        } else if (email != null && !email.isBlank()) {
-            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(email);
-        } else {
-            return locacaoRepository.findByDataDevolvidoIsNotNull();
-        }
-    }
+//    public List<Locacao> buscarPendentesFiltrados(String cpf, String nome, String email) {
+//        if (cpf != null && !cpf.isBlank()) {
+//            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(cpf);
+//        } else if (nome != null && !nome.isBlank()) {
+//            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(nome);
+//        } else if (email != null && !email.isBlank()) {
+//            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(email);
+//        } else {
+//            return locacaoRepository.findByDataDevolvidoIsNull();
+//        }
+//    }
+//
+//    public List<Locacao> buscarDevolvidosFiltrados(String cpf, String nome, String email) {
+//        if (cpf != null && !cpf.isBlank()) {
+//            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNotNull(cpf);
+//        } else if (nome != null && !nome.isBlank()) {
+//            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(nome);
+//        } else if (email != null && !email.isBlank()) {
+//            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(email);
+//        } else {
+//            return locacaoRepository.findByDataDevolvidoIsNotNull();
+//        }
+//    }
     
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);

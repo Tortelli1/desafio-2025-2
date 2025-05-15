@@ -35,7 +35,7 @@
 	                <p><strong>Data Devolução Prevista:</strong> <span th:text="${#dates.format(locacao.dataDevolucao, 'dd/MM/yyyy')}"></span></p>
 	                <p><strong>Filmes Alocados:</strong></p>
 	                <ul>
-	                    <li th:each="exemplar : ${locacao.exemplares}" th:text="${exemplar.filme.titulo}"></li>
+	                    <li th:each="exemplar : ${locacao.listaExemplares}" th:text="${exemplar.filmeTitulo}"></li>
 	                </ul>
 
 	                <div>

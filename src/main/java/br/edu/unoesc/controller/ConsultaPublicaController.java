@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.edu.unoesc.model.Locacao;
+import br.edu.unoesc.DTO.LocacaoDTO;
 import br.edu.unoesc.service.LocacaoService;
 import br.edu.unoesc.service.QRCodeService;
 
@@ -32,11 +32,11 @@ public class ConsultaPublicaController {
 
     @GetMapping("/resultado")
     public String exibirResultadoConsulta(@RequestParam String cpf, Model model) {
-        List<Locacao> locacoes = locacaoService.buscarLocacoesPendentesPorCpf(cpf);
+        List<LocacaoDTO> locacoes = locacaoService.buscarLocacoesPendentesPorCpf(cpf);
 
         Map<Integer, String> qrCodes = new HashMap<>();
-        for (Locacao locacao : locacoes) {
-            qrCodes.put(locacao.getId(), qrCodeService.gerarQrCode(locacao));
+        for (LocacaoDTO locacao : locacoes) {
+            qrCodes.put(locacao.id(), qrCodeService.gerarQrCode(locacao));
         }
 
         model.addAttribute("cpf", cpf);
