@@ -46,11 +46,12 @@ public class LocacaoService {
     }
 
     public List<LocacaoDTO> buscarLocacoesPendentesPorCpf(String cpf) {
-        return locacaoRepository.findByCpf(cpf)
+        return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(cpf)
                 .stream()
                 .map(LocacaoDTO::new)
                 .toList();
     }
+    
     public List<LocacaoDTO> buscarPendentesFiltrados(String cpf, String nome, String email) {
         List<Locacao> locacoes;
 

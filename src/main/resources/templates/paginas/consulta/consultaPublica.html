@@ -11,7 +11,7 @@
 	<header th:insert="~{/paginas/header :: header}"></header>
 
 	<div class="container-consulta">
-	    <h2>Consulta de Locações Ativas por CPF</h2>
+	    <h2>Consulta de Locações Pendentes por CPF</h2>
 
 	    <form method="get" th:action="@{/consultaPublica/resultado}">
 	        <label for="cpf">Digite o CPF:</label>
@@ -38,10 +38,10 @@
 	                    <li th:each="exemplar : ${locacao.listaExemplares}" th:text="${exemplar.filmeTitulo}"></li>
 	                </ul>
 
-	                <div>
-	                    <p><strong>QR Code:</strong></p>
-	                    <img th:src="${qrCodes[locacao.id]}" alt="QR Code">
-	                </div>
+					<div th:if="${locacao.dataDevolvido == null}">
+					    <p><strong>QR Code:</strong></p>
+					    <img th:src="${qrCodes[locacao.id]}" alt="QR Code">
+					</div>
 
 	                <hr>
 	            </div>
