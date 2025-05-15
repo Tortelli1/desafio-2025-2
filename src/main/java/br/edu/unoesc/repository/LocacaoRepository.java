@@ -3,6 +3,8 @@ package br.edu.unoesc.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.edu.unoesc.model.Locacao;
@@ -31,5 +33,24 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Integer> {
     List<Locacao> findByDataDevolvidoIsNull();
 
     List<Locacao> findByDataDevolvidoIsNotNull();
+    
+    @Query("""
+    	    SELECT l FROM Locacao l
+    	    JOIN l.exemplares e
+    	    JOIN e.filme f
+    	    WHERE l.dataDevolvido IS NULL
+    	    AND LOWER(f.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))
+    	""")
+    	List<Locacao> buscarPendentesPorTituloFilme(@Param("titulo") String titulo);
+    
+    @Query("""
+    	    SELECT l FROM Locacao l
+    	    JOIN l.exemplares e
+    	    JOIN e.filme f
+    	    WHERE l.dataDevolvido IS NOT NULL
+    	    AND LOWER(f.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))
+    	""")
+    	List<Locacao> buscarDevolvidosPorTituloFilme(@Param("titulo") String titulo);
+
     
 }

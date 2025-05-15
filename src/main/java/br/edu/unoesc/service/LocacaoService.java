@@ -20,7 +20,7 @@ public class LocacaoService {
 
     @Autowired
     private ExemplarService exemplarService;
-
+    
     @Autowired
     private FilmeService filmeService;
     
@@ -52,7 +52,7 @@ public class LocacaoService {
                 .toList();
     }
     
-    public List<LocacaoDTO> buscarPendentesFiltrados(String cpf, String nome, String email) {
+    public List<LocacaoDTO> buscarPendentesFiltrados(String cpf, String nome, String email, String filme) {
         List<Locacao> locacoes;
 
         if (cpf != null && !cpf.isBlank()) {
@@ -61,7 +61,9 @@ public class LocacaoService {
             locacoes = locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(nome);
         } else if (email != null && !email.isBlank()) {
             locacoes = locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(email);
-        } else {
+        } else if(filme != null && !filme.isBlank()) {
+        	locacoes = locacaoRepository.buscarPendentesPorTituloFilme(filme);
+        }else {
             locacoes = locacaoRepository.findByDataDevolvidoIsNull();
         }
 
@@ -70,7 +72,7 @@ public class LocacaoService {
                 .toList();
     }
 
-    public List<LocacaoDTO> buscarDevolvidosFiltrados(String cpf, String nome, String email) {
+    public List<LocacaoDTO> buscarDevolvidosFiltrados(String cpf, String nome, String email, String filme) {
         List<Locacao> locacoes;
 
         if (cpf != null && !cpf.isBlank()) {
@@ -79,7 +81,9 @@ public class LocacaoService {
             locacoes = locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(nome);
         } else if (email != null && !email.isBlank()) {
             locacoes = locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(email);
-        } else {
+        }else if(filme != null && !filme.isBlank()) {
+        	locacoes = locacaoRepository.buscarDevolvidosPorTituloFilme(filme);
+        }else {
             locacoes = locacaoRepository.findByDataDevolvidoIsNotNull();
         }
 
@@ -87,30 +91,6 @@ public class LocacaoService {
                 .map(LocacaoDTO::new)
                 .toList();
     }
-    
-//    public List<Locacao> buscarPendentesFiltrados(String cpf, String nome, String email) {
-//        if (cpf != null && !cpf.isBlank()) {
-//            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNull(cpf);
-//        } else if (nome != null && !nome.isBlank()) {
-//            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNull(nome);
-//        } else if (email != null && !email.isBlank()) {
-//            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNull(email);
-//        } else {
-//            return locacaoRepository.findByDataDevolvidoIsNull();
-//        }
-//    }
-//
-//    public List<Locacao> buscarDevolvidosFiltrados(String cpf, String nome, String email) {
-//        if (cpf != null && !cpf.isBlank()) {
-//            return locacaoRepository.findByCpfContainingIgnoreCaseAndDataDevolvidoIsNotNull(cpf);
-//        } else if (nome != null && !nome.isBlank()) {
-//            return locacaoRepository.findByNomeContainingIgnoreCaseAndDataDevolvidoIsNotNull(nome);
-//        } else if (email != null && !email.isBlank()) {
-//            return locacaoRepository.findByEmailContainingIgnoreCaseAndDataDevolvidoIsNotNull(email);
-//        } else {
-//            return locacaoRepository.findByDataDevolvidoIsNotNull();
-//        }
-//    }
     
     public void adicionarLocacao(LocacaoDTO locacaoDTO, List<Integer> exemplarIds) {
         List<Exemplar> exemplares = exemplarService.buscarPorId(exemplarIds);

@@ -36,6 +36,7 @@ public class LocacaoController {
             @RequestParam(value = "cpf", required = false) String cpf,
             @RequestParam(value = "nome", required = false) String nome,
             @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "filme", required = false) String filme,
             Model model) {
 
         List<LocacaoDTO> pendentes;
@@ -43,11 +44,11 @@ public class LocacaoController {
 
         boolean filtroAtivo = (cpf != null && !cpf.isBlank()) ||
                               (nome != null && !nome.isBlank()) ||
-                              (email != null && !email.isBlank());
+                              (email != null && !email.isBlank()|| (filme != null && !filme.isBlank()));
 
         if (filtroAtivo) {
-            pendentes = locacaoService.buscarPendentesFiltrados(cpf, nome, email);
-            devolvidos = locacaoService.buscarDevolvidosFiltrados(cpf, nome, email);
+            pendentes = locacaoService.buscarPendentesFiltrados(cpf, nome, email, filme);
+            devolvidos = locacaoService.buscarDevolvidosFiltrados(cpf, nome, email, filme);
         } else {
             pendentes = locacaoService.listarPendentes();
             devolvidos = locacaoService.listarDevolvidos();
