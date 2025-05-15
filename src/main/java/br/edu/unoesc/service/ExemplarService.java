@@ -80,7 +80,7 @@ public class ExemplarService {
 
         boolean estaAlugado = locacaoRepository.existsByExemplares_IdAndDataDevolvidoIsNull(id);
         if (estaAlugado) {
-            throw new RuntimeException("Exemplar está atualmente alugado e não pode ser excluído.");
+            throw new ExcecaoPersonalizada("Ops! O exemplar está atualmente alugado e não pode ser excluído.");
         }
 
         exemplarRepository.deleteById(id);
@@ -89,7 +89,6 @@ public class ExemplarService {
         }
       
     }
-
 
     public Exemplar buscarPorId(Integer id) {
         return exemplarRepository.findById(id)
