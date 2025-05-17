@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Exemplar</title>
+    <link rel="stylesheet" href="/css/paginas/cadastro/cadastroPadrao.css">
+	<link rel="stylesheet" href="/css/paginas/header.css">
+</head>
+<body>
+    <header th:insert="~{/paginas/header :: header}"></header>
+
+    <div class="container">
+        <h2 th:text="${exemplarDTO != null and exemplarDTO.id == null} ? 'Cadastrar Exemplar' : 'Editar Exemplar'"></h2>
+
+        <div th:if="${success}" class="alert alert-success" role="alert" th:text="${success}"></div>
+        <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}"></div>
+
+        <form th:action="@{${exemplarDTO.id == null} ? '/exemplar/salvar' : '/exemplar/editar'}"  th:object="${exemplarDTO}" method="post">
+            <input type="hidden" th:field="*{id}" />
+			
+			<div class="form-group">
+			    <label for="filmeId">Filme</label>
+			    <select th:field="*{filmeId}" class="form-control" id="filmeId" required>
+			        <option value="" selected>Selecione um filme</option>
+			        <option th:each="filme : ${filmes}" 
+			                th:value="${filme.id}" 
+			                th:text="${filme.titulo}">
+			        </option>
+			    </select>
+			</div>
+
+            <div class="form-group">
+                <label for="ativo">Ativo</label>
+                <select th:field="*{ativo}" class="form-control" id="ativo">
+                    <option value="true" th:selected="*{ativo} == true">Sim</option>
+                    <option value="false" th:selected="*{ativo} == false">Não</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+</body>
+</html>

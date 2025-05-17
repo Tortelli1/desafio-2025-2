@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8" />
+	<title>Consulta de Filmes</title>
+	<link rel="stylesheet" href="/css/paginas/consulta/consultaPadrao.css">
+	<link rel="stylesheet" href="/css/paginas/header.css">
+</head>
+<body>
+
+	<header th:insert="~{/paginas/header :: header}"></header>
+
+	<div class="container-consulta mt-5">
+		<h2>Filmes Cadastrados</h2>
+
+		<div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+		<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Título</th>
+					<th>Resumo</th>
+					<th>Pontuação</th>
+					<th>Lançamento</th>
+					<th>Exemplares</th>
+					<th>Status</th>
+					<th>Ações</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="filme : ${filmeDTO}">
+					<td th:text="${filme.titulo}">Título do Filme</td>
+					<td th:text="${filme.resumo}">Resumo do Filme</td>
+					<td th:text="${filme.pontuacao}">0.0</td>
+					<td th:text="${#dates.format(filme.lancamento, 'dd/MM/yyyy')}">01/01/2024</td>
+					<td th:text="${filme.exemplaresDisponiveis}">0</td>
+					<td class="status" th:text="${filme.ativo} ? 'Ativo' : 'Inativo'"
+						th:classappend="${filme.ativo} ? 'text-success' : 'text-danger'"></td>
+					<td class="acao">
+						<a th:href="@{/filmes/editar/{id}(id=${filme.id})}" class="btn btn-sm btn-primary me-1">Editar</a>
+						<button class="btn btn-sm btn-danger btn-excluir" th:attr="data-id=${filme.id}">Excluir</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<script src="/js/consultar/consultarFilme.js"></script>
+
+</body>
+</html>

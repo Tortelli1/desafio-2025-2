@@ -1,0 +1,97 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.container {
+    background-color: var(--branco);
+    padding: 2em;
+    margin: 3em auto;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 1em;
+    color: var(--preto);
+    font-size: 1.5em;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 1.5em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--azul-escuro);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+button {
+    background-color: var(--azul-escuro);
+    color: var(--branco);
+    border: none;
+    padding: 0.8em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--fundo-botao);
+}
+
+.alert {
+    padding: 0.75em;
+    margin-bottom: 1.5em;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.alert-success {
+    background-color: var(--sucesso);
+    color: var(--branco);
+}
+
+.alert-danger {
+    background-color: var(--erro);
+    color: var(--branco);
+}
+
+#sugestoes .list-group-item {
+    display: block;
+    cursor: pointer;
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #ddd;
+}
+
+#sugestoes .list-group-item:last-child {
+    border-bottom: none;
+}
+
+#sugestoes .list-group-item:hover {
+    background-color: #f1f1f1;
+}

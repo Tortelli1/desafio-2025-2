@@ -1,0 +1,27 @@
+<div th:fragment="header">
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+                <a href="#">Cadastro</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/filmes/cadastrar" >Cadastro de Filmes</a></li>
+                    <li><a href="/exemplar/cadastrar" >Cadastro de Exemplares</a></li>
+                    <li><a href="/locacoes/cadastrar">Cadastro de Locações</a></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#">Consulta</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/filmes/consultar" >Consulta de Filmes</a></li>
+                    <li><a href="/exemplar/consultar" >Consulta de Exemplares</a></li>
+                    <li><a href="/locacoes/consultar">Consulta de Locações</a></li>
+					<li><a href="/consultaPublica/consultarLocacao">Ver Locações</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+	<form class="logout-form" th:action="@{/logout}" method="post">
+	    <button type="submit" class="logout-button">Logout</button>
+	</form>
+</div>
